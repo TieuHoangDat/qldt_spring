@@ -14,32 +14,40 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private CustomUserDetailsService userDetailsService;
+//    private CustomUserDetailsService userDetailsService;
+//
+//    @Autowired
+//    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
 
-    @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/register", "/clubs", "/css/**", "/js/**")
-                .permitAll()
-                .and()
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/courses")
-                        .loginProcessingUrl("/login")
-                        .failureUrl("/login?error=true")
-                        .permitAll()
-                ).logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
-                );
+                .permitAll();
+//                .and()
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/courses")
+//                        .loginProcessingUrl("/login")
+//                        .failureUrl("/login?error=true")
+//                        .permitAll()
+//                )
+//                .logout(
+//                        logout -> logout
+//                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+//                );
 
         return http.build();
     }
 
+//    public void configure(AuthenticationManagerBuilder builder) throws Exception {
+//        builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    }
 }

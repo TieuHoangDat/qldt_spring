@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"
->
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout}"-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,43 +17,75 @@
 <body>
 
 <!--Body-->
-<section layout:fragment="body">
-    <div id="logreg-forms">
-        <form class="form-signin" th:action="@{/login}" method="post">
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
+<!--<section layout:fragment="body">-->
+<!--    <div id="logreg-forms">-->
+<!--        <div th:if="${param.error}" class="alert alert-success">-->
+<!--            Invalid username and password.-->
+<!--        </div>-->
+<!--        <div th:if="${param.logout}" class="alert alert-success">-->
+<!--            You have been logged out.-->
+<!--        </div>-->
+<!--        <div class="login-form">-->
+<!--        <form class="form-signin" th:action="@{/login}" method="post">-->
+<!--            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>-->
+<!--            <input-->
+<!--                    id="username"-->
+<!--                    type="text"-->
+<!--                    class="form-control"-->
+<!--                    placeholder="Username"-->
+<!--                    name="username">-->
+<!--            <input-->
+<!--                    id="password"-->
+<!--                    type="password"-->
+<!--                    class="form-control"-->
+<!--                    placeholder="Password"-->
+<!--                    name="password">-->
+<!--            <div class="form-group form-check">-->
+<!--                <input name="remember" value="1" type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--                <label class="form-check-label" for="exampleCheck1">Remember me</label>-->
+<!--            </div>-->
 
-            <p class="text-danger">
-                ${mess}
-            </p>
+<!--            <button class="btn btn-success btn-block" type="submit" value="Log in"><i class="fas fa-sign-in-alt"></i>Log in</button>-->
+<!--            &lt;!&ndash;<hr>&ndash;&gt;-->
+<!--            <a th:href="@{/register}" class="btn btn-black">Sign up here.</a>-->
+<!--        </form>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
-            <input
-                    id="username"
-                    type="text"
-                    class="form-control"
-                    placeholder="Username"
-                    name="username">
-            <input
-                    id="password"
-                    type="password"
-                    class="form-control"
-                    placeholder="Password"
-                    name="password">
-            <div class="form-group form-check">
-                <input name="remember" value="1" type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Remember me</label>
-            </div>
 
-            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-            <!--<hr>-->
-            <!--<button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>-->
-        </form>
+        <div id="logreg-forms">
 
-        <br>
+            <form method="post" role="form" th:action="@{/login/check}" th:object="${user}">
+                <div th:if="${param.fail}" class="alert alert-success">
+                    Username or password is wrong!
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Username"
+                            th:field="*{username}">
+                </div>
 
-    </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input
+                            type="password"
+                            class="form-control"
+                            placeholder="Password"
+                            th:field="*{password}">
+                </div>
+<!--                <a th:href="@{/register}" class="btn btn-black">Register here.</a>-->
+                <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i>Log in</button>
+            </form>
 
-</section>
+            <br>
+
+        </div>
+
+<!--</section>-->
 
 
 </body>

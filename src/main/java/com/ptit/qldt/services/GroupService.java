@@ -1,4 +1,4 @@
 package com.ptit.qldt.services;
 
-public interface AccountService {
+public interface GroupService {
 }
