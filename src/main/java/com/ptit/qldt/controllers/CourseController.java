@@ -1,6 +1,7 @@
 package com.ptit.qldt.controllers;
 
 import com.ptit.qldt.dtos.CourseDto;
+import com.ptit.qldt.models.Account;
 import com.ptit.qldt.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller

@@ -1,15 +1,18 @@
 package com.ptit.qldt.dtos;
-
+import com.ptit.qldt.models.Account;
+import com.ptit.qldt.models.Course;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class GroupDto {
-    private String group_id;
-    private String group_name;
-    private String course_id;
+    private String groupId;
+    private String groupName;
+    private Course course;
     private String time;
-    private int teacher_id;
+    private Account teacher;
     private String room;
-    private int max_students;
-    private int available_slots;
+    private int maxStudents;
+    private int availableSlots;
 }

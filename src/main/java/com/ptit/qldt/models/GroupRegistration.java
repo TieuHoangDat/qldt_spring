@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -18,8 +18,17 @@ import java.util.Date;
 @Table(name = "groupregistrations")
 public class GroupRegistration {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int account_id;
-    private String group_id;
-    private Date time;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
+
+    @Column(name = "time", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL")
+    private LocalDateTime time;
 }

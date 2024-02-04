@@ -22,7 +22,15 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" th:if="${session.acc == null}">
+                <li class="nav-item ${homeactive}">
+                    <a class="nav-link" href="home">Trang chủ<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ${loginactive} ">
+                    <a class="nav-link" th:href="@{/login}">Đăng nhập</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto" th:if="${session.acc != null}">
                 <li class="nav-item ${homeactive}">
                     <a class="nav-link" href="home">Trang chủ<span class="sr-only">(current)</span></a>
                 </li>
@@ -30,7 +38,7 @@
                     <a class="nav-link" th:href="@{/courses}">Quản lý môn học</a>
                 </li>
                 <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
-                    <a class="nav-link" href="register">Đăng ký môn học</a>
+                    <a class="nav-link" th:href="@{/group_register}">Đăng ký môn học</a>
                 </li>
                 <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
                     <a class="nav-link" href="show_grade">Xem điểm</a>

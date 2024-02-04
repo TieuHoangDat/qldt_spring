@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,10 +17,24 @@ import java.util.Date;
 @Table(name = "courseregistrations")
 public class CourseRegistration {
     @Id
-    private int id;
-    private int account_id;
-    private String course_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @Column(nullable = false)
     private String term;
-    private Date registration_date;
-    private double grade;
+
+    @Column(name = "registration_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL")
+    private LocalDateTime registrationDate;
+
+    @Column(columnDefinition = "FLOAT DEFAULT 0")
+    private Float grade;
+
 }

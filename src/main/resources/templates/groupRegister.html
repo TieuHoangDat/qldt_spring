@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Course Manager</title>
+</head>
+<body>
+<!--Body-->
+<section layout:fragment="body">
+    <div class="container">
+
+        <!--Danh sách các môn học mà sinh viên đăng ký-->
+        <h4>ĐĂNG KÝ MÔN HỌC HỌC KỲ 1 - NĂM HỌC 2023-2024</h4>
+
+        <li class="list-group-item text-white" th:each="o :${courses}">
+            <a href="course?id=${o.id}">[[${o.name}]]</a>
+        </li>
+
+
+        <!--Danh sách các group theo môn học-->
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <!--								<span class="custom-checkbox">
+                                                                <input type="checkbox" id="selectAll">
+                                                                <label for="selectAll"></label>
+                                                            </span>-->
+                        </th>
+                        <th>Tên môn học</th>
+                        <th>Nhóm</th>
+                        <th>Thời gian</th>
+                        <th>Tên giảng viên</th>
+                        <th>Phòng</th>
+                        <th>Còn lại</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+<!--                    <c:forEach items="${listG}" var="o">-->
+                        <tr th:each="o :${groups}">
+                            <td>
+                                <a onclick="a()" href="addGroupRegister?grid=${o.group_id}" >
+                                    <input class="btn btn-success"  value="Add"  style="width: 60px;">
+                                </a>
+                            </td>
+                            <td>[[${o.course.name}]]</td>
+                            <td>[[${o.groupName}]]</td>
+                            <td>[[${o.time}]]</td>
+                            <td>[[${o.teacher.name}]]</td>
+                            <td>[[${o.room}]]</td>
+                            <td>[[${o.availableSlots}]]</td>
+
+
+                        </tr>
+<!--                    </c:forEach>-->
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+        <!--Danh sách các group đã đăng ký-->
+        <h4>Danh sách môn học đã đăng ký</h4>
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="selectAll">
+									<label for="selectAll"></label>
+								</span>
+                        </th>
+                        <th>Tên môn học</th>
+                        <th>Nhóm</th>
+                        <th>Thời gian</th>
+                        <th>Tên giảng viên</th>
+                        <th>Phòng</th>
+                        <th>Thời gian đăng ký</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+<!--                    <c:forEach items="${listGR}" var="o">-->
+                        <tr  th:each="o :${groupRegistrations}">
+                            <td>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="checkbox5" name="options[]" value="1">
+									<label for="checkbox5"></label>
+								</span>
+                            </td>
+                            <td>[[${o.group.course.name}]]</td>
+                            <td>[[${o.group.groupName}]]</td>
+                            <td>[[${o.group.time}]]</td>
+                            <td>[[${o.group.teacher.name}]]</td>
+                            <td>[[${o.group.room}]]</td>
+                            <td>[[${o.time}]]</td>
+                            <td>
+<!--                                <a href="deleteGroupRegister?grid=${o.getGroup().group_id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
+                            </td>
+                        </tr>
+<!--                    </c:forEach>-->
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>
+

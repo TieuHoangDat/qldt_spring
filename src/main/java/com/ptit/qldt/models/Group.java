@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,15 +14,32 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "groups")
+@Table(name = "`Groups`")
 public class Group {
     @Id
-    private String group_id;
-    private String group_name;
-    private String course_id;
+    @Column(name = "group_id")
+    private String groupId;
+
+    @Column(name = "group_name", nullable = false)
+    private String groupName;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @Column(nullable = false)
     private String time;
-    private int teacher_id;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Account teacher;
+
+    @Column(nullable = false)
     private String room;
-    private int max_students;
-    private int available_slots;
+
+    @Column(name = "max_students", nullable = false)
+    private int maxStudents;
+
+    @Column(name = "available_slots", nullable = false)
+    private int availableSlots;
 }
