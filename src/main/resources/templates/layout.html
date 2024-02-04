@@ -46,7 +46,7 @@
 
 
                 <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
-                    <a class="nav-link" href="studenttimetable">Xem thời khóa biểu tuần</a>
+                    <a class="nav-link" th:href="@{/time_table}">Xem thời khóa biểu tuần</a>
                 </li>
 
                 <!--            <c:if test = "${sessionScope.acc == null}">-->

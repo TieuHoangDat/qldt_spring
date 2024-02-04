@@ -30,4 +30,9 @@ public class GroupServiceImpl implements GroupService {
         List<Group> groups = groupRepository.findGroupsByCourses(courses);
         return groups.stream().map(group -> mapToGroupDto(group)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Group> getGroupByTeacherID(int accountId) {
+        return groupRepository.getGroupByTeacherID(accountId);
+    }
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/manager.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/timetable.css}" />
+    <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+    <div class="container">
+        <div class="timetable-img text-center">
+            <img src="img/content/timetable.png" alt="">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                <tr class="bg-light-gray">
+                    <th class="text-uppercase">Time
+                    </th>
+                    <th class="text-uppercase">Monday</th>
+                    <th class="text-uppercase">Tuesday</th>
+                    <th class="text-uppercase">Wednesday</th>
+                    <th class="text-uppercase">Thursday</th>
+                    <th class="text-uppercase">Friday</th>
+                    <th class="text-uppercase">Saturday</th>
+                    <th class="text-uppercase">Sunday</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${#numbers.sequence(1, 5)}">
+                    <!-- Các điều kiện cho giờ -->
+                    <td class="align-middle" th:if="${row==1}">07:00</td>
+                    <td class="align-middle" th:if="${row==2}">09:00</td>
+                    <td class="align-middle" th:if="${row==3}">12:00</td>
+                    <td class="align-middle" th:if="${row==4}">14:00</td>
+                    <td class="align-middle" th:if="${row==5}">16:00</td>
+
+                    <!-- Vòng lặp từ 1 đến 7 -->
+                    <th:block th:each="col : ${#numbers.sequence(1, 7)}">
+                        <td th:if="${b[row][col + 1] == null}" style="width: 170px;"></td>
+                        <td th:if="${b[row][col + 1] != null}" class="bg-light-gray" style="width: 170px;">
+                            <span style="padding: 5px;" class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
+                                  th:text="${b[row][col + 1].course.name}"></span>
+                            <div class="font-size14" th:text="'Giảng viên: ' + ${b[row][col + 1].teacher.getName()}"></div>
+                            <div class="font-size14" th:text="'Phòng: ' + ${b[row][col + 1].room}"></div>
+                        </td>
+                    </th:block>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+
+</body>
+</html>
+

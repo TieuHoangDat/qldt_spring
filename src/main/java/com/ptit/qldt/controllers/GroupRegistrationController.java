@@ -4,6 +4,7 @@ import com.ptit.qldt.dtos.CourseDto;
 import com.ptit.qldt.dtos.GroupDto;
 import com.ptit.qldt.dtos.GroupRegistrationDto;
 import com.ptit.qldt.models.Account;
+import com.ptit.qldt.models.Group;
 import com.ptit.qldt.services.CourseService;
 import com.ptit.qldt.services.GroupRegistrationService;
 import com.ptit.qldt.services.GroupService;
@@ -40,5 +41,29 @@ public class GroupRegistrationController {
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
         return "groupRegister";
+    }
+
+    @GetMapping("/time_table")
+    public String showTimeTable(HttpSession session, Model model) {
+        Account user = (Account) session.getAttribute("acc");
+        Group b[][] = new Group[10][10];
+
+        if(user.getRole()==3) {
+            List<GroupRegistrationDto> groupRegistrations = groupRegistrationService.findgroupRegistration(user.getAccount_id());
+            for(GroupRegistrationDto o : groupRegistrations) {
+                int x = Integer.parseInt(o.getGroup().getTime().substring(11));
+                int y = Integer.parseInt(o.getGroup().getTime().substring(4, 5));
+                b[x][y] = o.getGroup();
+            }
+        } else if(user.getRole()==2){
+            List<Group> listg = groupService.getGroupByTeacherID(user.getAccount_id());
+            for(Group o : listg) {
+                int x = Integer.parseInt(o.getTime().substring(11));
+                int y = Integer.parseInt(o.getTime().substring(4, 5));
+                b[x][y] = o;
+            }
+        }
+        model.addAttribute("b", b);
+        return "time_table";
     }
 }
