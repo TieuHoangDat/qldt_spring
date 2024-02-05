@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "groupregistrations")
@@ -31,4 +30,8 @@ public class GroupRegistration {
 
     @Column(name = "time", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL")
     private LocalDateTime time;
+
+    public GroupRegistration() {
+        this.time = LocalDateTime.now();
+    }
 }

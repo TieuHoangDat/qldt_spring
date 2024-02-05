@@ -25,7 +25,7 @@
         <h4>ĐĂNG KÝ MÔN HỌC HỌC KỲ 1 - NĂM HỌC 2023-2024</h4>
 
         <li class="list-group-item text-white" th:each="o :${courses}">
-            <a href="course?id=${o.id}">[[${o.name}]]</a>
+            <a th:href="@{/group_register/{courseId}/groups(courseId=${o.id})}">[[${o.name}]]</a>
         </li>
 
 
@@ -52,10 +52,9 @@
                     </tr>
                     </thead>
                     <tbody>
-<!--                    <c:forEach items="${listG}" var="o">-->
                         <tr th:each="o :${groups}">
                             <td>
-                                <a onclick="a()" href="addGroupRegister?grid=${o.group_id}" >
+                                <a onclick="a()" th:href="@{/group_register/{groupId}/add(groupId=${o.groupId})}" >
                                     <input class="btn btn-success"  value="Add"  style="width: 60px;">
                                 </a>
                             </td>
@@ -68,7 +67,6 @@
 
 
                         </tr>
-<!--                    </c:forEach>-->
                     </tbody>
                 </table>
 
@@ -100,7 +98,6 @@
                     </tr>
                     </thead>
                     <tbody>
-<!--                    <c:forEach items="${listGR}" var="o">-->
                         <tr  th:each="o :${groupRegistrations}">
                             <td>
 								<span class="custom-checkbox">
@@ -115,13 +112,37 @@
                             <td>[[${o.group.room}]]</td>
                             <td>[[${o.time}]]</td>
                             <td>
-<!--                                <a href="deleteGroupRegister?grid=${o.getGroup().group_id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
+                                <a th:href="@{/group_register/{groupId}/delete(groupId=${o.group.groupId})}" class="delete" data-toggle="modal">
+                                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                </a>
                             </td>
                         </tr>
-<!--                    </c:forEach>-->
+
                     </tbody>
                 </table>
 
+            </div>
+        </div>
+
+
+        <!-- Thông báo  -->
+        <div id="deleteEmployeeModal" class="modal fade in" th:style="'display: ' + ${blockAlert} + '; padding-right: 15px;'">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="register">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thông báo lỗi</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><a th:href="@{/group_register}">&times;</a></button>
+                        </div>
+                        <div class="modal-body">
+                            <p th:text="${mess}"></p>
+                            <p class="text-warning"><small>This action cannot be done.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/group_register}" type="submit" class="btn btn-danger">Ok</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 

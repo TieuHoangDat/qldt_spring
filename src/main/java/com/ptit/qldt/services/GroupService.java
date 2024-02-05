@@ -9,4 +9,8 @@ public interface GroupService {
     List<GroupDto> findAllGroupInCourseRegistration(int accountId);
 
     List<Group> getGroupByTeacherID(int accountId);
+
+    List<GroupDto> getGroupsForCourse(String courseId);
+
+    Group getGroupById(String groupId);
 }

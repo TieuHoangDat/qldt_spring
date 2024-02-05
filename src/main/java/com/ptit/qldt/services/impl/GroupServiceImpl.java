@@ -35,4 +35,15 @@ public class GroupServiceImpl implements GroupService {
     public List<Group> getGroupByTeacherID(int accountId) {
         return groupRepository.getGroupByTeacherID(accountId);
     }
+
+    @Override
+    public List<GroupDto> getGroupsForCourse(String courseId) {
+        List<Group> groups = groupRepository.findByCourseId(courseId);
+        return groups.stream().map(group -> mapToGroupDto(group)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Group getGroupById(String groupId) {
+        return groupRepository.findGroupById(groupId);
+    }
 }
