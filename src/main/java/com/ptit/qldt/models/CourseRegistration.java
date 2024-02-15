@@ -35,6 +35,6 @@ public class CourseRegistration {
     private LocalDateTime registrationDate;
 
     @Column(columnDefinition = "FLOAT DEFAULT 0")
-    private Float grade;
+    private double grade;
 
 }

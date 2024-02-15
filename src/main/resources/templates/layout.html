@@ -41,7 +41,7 @@
                     <a class="nav-link" th:href="@{/group_register}">Đăng ký môn học</a>
                 </li>
                 <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
-                    <a class="nav-link" href="show_grade">Xem điểm</a>
+                    <a class="nav-link" th:href="@{/show_grade}">Xem điểm</a>
                 </li>
 
 

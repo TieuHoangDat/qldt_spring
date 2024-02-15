@@ -55,15 +55,15 @@
                         <tr th:each="o :${groups}">
                             <td>
                                 <a onclick="a()" th:href="@{/group_register/{groupId}/add(groupId=${o.groupId})}" >
-                                    <input class="btn btn-success"  value="Add"  style="width: 60px;">
+                                    <input class="btn btn-success"  value="Add"  style="width: 60px;" th:classappend="${o.registed == true ? 'active' : ''}" />
                                 </a>
                             </td>
-                            <td>[[${o.course.name}]]</td>
-                            <td>[[${o.groupName}]]</td>
-                            <td>[[${o.time}]]</td>
-                            <td>[[${o.teacher.name}]]</td>
-                            <td>[[${o.room}]]</td>
-                            <td>[[${o.availableSlots}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.course.name}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.groupName}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.time}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.teacher.name}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.room}]]</td>
+                            <td th:style="${o.registed == true ? 'color: #000000 !important;' : ''}">[[${o.availableSlots}]]</td>
 
 
                         </tr>

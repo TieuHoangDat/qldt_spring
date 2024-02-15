@@ -15,4 +15,5 @@ public class GroupDto {
     private String room;
     private int maxStudents;
     private int availableSlots;
+    private boolean registed;
 }

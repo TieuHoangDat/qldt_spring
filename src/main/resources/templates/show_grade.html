@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/manager.css}" />
+    <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+    <div class="container">
+        <a onclick="a()" href="exportExcel" >
+            <input class="btn btn-success" value="Xuất Excel"  style="width: 110px;">
+        </a>
+<!--        <c:forEach items="${listT}" var="i">-->
+
+            <div class="table-responsive" th:each="i :${listT}">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+
+                            <h4>[[${i.term}]]</h4>
+
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="selectAll">
+									<label for="selectAll"></label>
+								</span>
+                            </th>
+                            <th>Mã môn học</th>
+                            <th>Tên môn học</th>
+                            <th>Số tín chỉ</th>
+                            <th>Điểm TK(10)</th>
+                            <th>Điểm TK(4)</th>
+                            <th>Điểm TK(C)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<!--                        <c:forEach items="${i.getLi()}" var="o">-->
+                            <tr  th:each="o :${i.getLi()}">
+                                <td>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="checkbox5" name="options[]" value="1">
+									<label for="checkbox5"></label>
+								</span>
+                                </td>
+                                <td>[[${o.getCourse().id}]]</td>
+                                <td>[[${o.getCourse().getName()}]]</td>
+                                <td>[[${o.getCourse().getNum_credit()}]]</td>
+                                <td>[[${o.grade_10}]]</td>
+                                <td>[[${o.grade_4}]]</td>
+                                <td>[[${o.grade_a}]]</td>
+                            </tr>
+<!--                        </c:forEach>-->
+                        </tbody>
+                    </table>
+                    <div class="clearfix">
+                        <div class="col-xs-6">
+                            <h5>- Điểm trung bình học kỳ hệ 4:  [[${i.avg_4}]]</h5>
+                            <h5>- Điểm trung bình học kỳ hệ 10: [[${i.avg_10}]]</h5>
+                            <h5>- Số tín chỉ đạt học kỳ:        [[${i.total_credit}]]</h5>
+                        </div>
+                        <div class="col-xs-6">
+                            <h5>- Điểm trung bình tích lũy hệ 4:  [[${i.tl_4}]]</h5>
+                            <h5>- Điểm trung bình tích lũy hệ 10: [[${i.tl_10}]]</h5>
+                            <h5>- Số tín chỉ tích lũy:            [[${i.tl_credit}]]</h5>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+<!--        </c:forEach>-->
+    </div>
+
+</section>
+
+
+</body>
+</html>
+

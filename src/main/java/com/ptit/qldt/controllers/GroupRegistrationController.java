@@ -39,6 +39,16 @@ public class GroupRegistrationController {
         List<CourseDto> courses = courseService.findCourseRegister(user.getAccount_id());
         List<GroupRegistrationDto> groupRegistrations = groupRegistrationService.findgroupRegistration(user.getAccount_id());
         List<GroupDto> groups = groupService.findAllGroupInCourseRegistration(user.getAccount_id());
+        for(GroupDto g : groups) {
+            boolean ok = false;
+            for(GroupRegistrationDto gr : groupRegistrations) {
+                if (g.getGroupId().equals(gr.getGroup().getGroupId())) {
+                    ok = true;
+                    break;
+                }
+            }
+            g.setRegisted(ok);
+        }
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
@@ -51,6 +61,16 @@ public class GroupRegistrationController {
         List<CourseDto> courses = courseService.findCourseRegister(user.getAccount_id());
         List<GroupDto> groups = groupService.getGroupsForCourse(courseId);
         List<GroupRegistrationDto> groupRegistrations = groupRegistrationService.findgroupRegistration(user.getAccount_id());
+        for(GroupDto g : groups) {
+            boolean ok = false;
+            for(GroupRegistrationDto gr : groupRegistrations) {
+                if (g.getGroupId().equals(gr.getGroup().getGroupId())) {
+                    ok = true;
+                    break;
+                }
+            }
+            g.setRegisted(ok);
+        }
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
