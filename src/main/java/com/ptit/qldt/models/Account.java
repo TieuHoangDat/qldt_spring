@@ -23,4 +23,5 @@ public class Account {
     private String password;
     private String email;
     private Integer role;
+    private String otp;
 }

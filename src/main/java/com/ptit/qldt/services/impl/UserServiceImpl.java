@@ -1,5 +1,6 @@
 package com.ptit.qldt.services.impl;
 
+import com.ptit.qldt.dtos.AccountDto;
 import com.ptit.qldt.dtos.RegistrationDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.repositories.UserRepository;
@@ -9,6 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.ptit.qldt.mappers.AccountMapper.mapToAccountDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,5 +51,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Account findFirstByUsername(String username) {
         return userRepository.findFirstByUsername(username);
+    }
+
+    @Override
+    public List<AccountDto> findStudentsByGroupId(String id) {
+        List<Account> accounts = userRepository.findStudentsByGroupId(id);
+        return accounts.stream().map(account -> mapToAccountDto(account)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateOtp(int accountId, String otp) {
+        userRepository.updateOtp(accountId, otp);
+    }
+
+    @Override
+    public void updatePassword(int accountId, String newPassword) {
+        userRepository.updatePasswordByAccountId(accountId, newPassword);
     }
 }

@@ -5,9 +5,7 @@ import com.ptit.qldt.dtos.TermDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.models.CourseRegistration;
 import com.ptit.qldt.services.CourseRegistrationService;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +61,7 @@ public class CourseRegistrationController {
         return "show_grade";
     }
 
-    @GetMapping("/exportExcel")
+    @GetMapping("/exportGrade")
     public void exportExcel(HttpServletResponse response, HttpSession session) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=Grade.xlsx");
@@ -101,9 +99,30 @@ public class CourseRegistrationController {
 
             int rowIndex = 4;
 
+            sheet.setColumnWidth(1, 20 * 256);
+
+            CellStyle style_b = workbook.createCellStyle();
+            // Thiết lập font in đậm
+            Font font_b = workbook.createFont();
+            font_b.setBold(true); // In đậm
+            font_b.setFontName("Times New Roman");
+            style_b.setFont(font_b);
+
+            CellStyle style_b_w = workbook.createCellStyle();
+            // Thiết lập font in đậm
+            Font font_b_w = workbook.createFont();
+            font_b_w.setBold(true); // In đậm
+            font_b_w.setFontName("Times New Roman");
+            style_b_w.setFont(font_b_w);
+            style_b_w.setWrapText(true);
+
             for(TermDto t : listTerm) {
-                Row row1 = sheet.createRow(rowIndex++);
+                Row row1 = sheet.createRow(rowIndex);
                 row1.createCell(0).setCellValue(t.getTerm());
+
+                Cell cell0 = row1.getCell(0);
+                cell0.setCellStyle(style_b);
+                rowIndex++;
 
                 Row headerRow = sheet.createRow(rowIndex++);
                 headerRow.createCell(0).setCellValue("Mã môn học");
@@ -112,6 +131,10 @@ public class CourseRegistrationController {
                 headerRow.createCell(3).setCellValue("Điểm TK(10)");
                 headerRow.createCell(4).setCellValue("Điểm TK(4)");
                 headerRow.createCell(5).setCellValue("Điểm TK(C)");
+                for(int i=0; i<=5; i++) {
+                    Cell cell = headerRow.getCell(i);
+                    cell.setCellStyle(style_b_w);
+                }
 
                 for (CourseRegistrationDto x : t.getLi()) {
                     Row dataRow = sheet.createRow(rowIndex++);

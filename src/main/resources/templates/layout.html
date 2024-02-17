@@ -49,19 +49,17 @@
                     <a class="nav-link" th:href="@{/time_table}">Xem thời khóa biểu tuần</a>
                 </li>
 
-                <!--            <c:if test = "${sessionScope.acc == null}">-->
-<!--                <li class="nav-item ${loginactive} ">-->
-<!--                    <a class="nav-link" th:href="@{/login}">Đăng nhập</a>-->
-<!--                </li>-->
-                <!--            </c:if>-->
-                <!--            <c:if test = "${sessionScope.acc != null}">-->
+                <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() == 2}">
+                    <a class="nav-link" th:href="@{/group_teacher}">Quản lý nhóm học</a>
+                </li>
+
                 <li class="nav-item" >
                     <a class="nav-link" th:text="'Hello ' + ${session.acc.getName()}"></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
                 </li>
-                <!--            </c:if>-->
+
 
             </ul>
 
