@@ -61,6 +61,37 @@ public class CourseRegistrationController {
         return "show_grade";
     }
 
+    @GetMapping("/tuition")
+    public String showTuition(HttpSession session, Model model) {
+        Account user = (Account) session.getAttribute("acc");
+
+        int id = user.getAccount_id();
+        List<String> listTermName = courseRegistrationService.getTermByStudentID(id);
+        List<TermDto> listTerm = new ArrayList<>();
+
+        for(String s : listTermName) {
+            List<CourseRegistration> tmp = courseRegistrationService.getCRByIdAndTerm(id, s);
+            TermDto t = new TermDto(s, tmp.stream().map(x -> mapToCourseRegistrationDto(x)).collect(Collectors.toList()));
+            listTerm.add(t);
+        }
+        Collections.sort(listTerm);
+
+        int total_credit = 0;
+        int total_tuition = 0;
+
+        for(TermDto t : listTerm) {
+            total_credit += t.getTotal_credit();
+            total_tuition += t.getTuition();
+        }
+
+//        request.setAttribute("gradeactive", "active");
+        model.addAttribute("listT", listTerm);
+        model.addAttribute("total_credit", total_credit);
+        model.addAttribute("total_tuition", total_tuition);
+
+        return "tuition";
+    }
+
     @GetMapping("/exportGrade")
     public void exportExcel(HttpServletResponse response, HttpSession session) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

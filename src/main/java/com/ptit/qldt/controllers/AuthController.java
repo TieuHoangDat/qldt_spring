@@ -60,6 +60,11 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/information")
+    public String informationPage() {
+        return "information";
+    }
+
     @PostMapping("/login/check")
     public String login(HttpSession session, @ModelAttribute("user")RegistrationDto acc) {
         String username = acc.getUsername();
@@ -69,7 +74,7 @@ public class AuthController {
 
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("acc", user);
-            return "redirect:/courses";
+            return "redirect:/home";
         } else {
 
             return "redirect:/login?fail";

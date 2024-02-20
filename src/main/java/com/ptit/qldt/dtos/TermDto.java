@@ -10,7 +10,7 @@ public class TermDto implements Comparable<TermDto>{
     private String term, sx1, sx2;
     private List<CourseRegistrationDto> li;
     private double avg_10, avg_4, tl_10, tl_4;
-    private int total_credit, tl_credit;
+    private int total_credit, tl_credit, tuition;
 
     public TermDto(String term, List<CourseRegistrationDto> li) {
         String s[] = term.trim().split("\\s+");
@@ -28,8 +28,17 @@ public class TermDto implements Comparable<TermDto>{
             }
         }
         total_credit = tmp;
+        tuition = tmp * 550000;
         avg_10 = Math.round((sum10/tmp)*100.0) / 100.0;
         avg_4 = Math.round((sum4/tmp)*100.0) / 100.0;
+    }
+
+    public int getTuition() {
+        return tuition;
+    }
+
+    public void setTuition(int tuition) {
+        this.tuition = tuition;
     }
 
     public String getTerm() {

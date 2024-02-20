@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+<!--    <h4 th:object="${notification}">[[${notification.title}]]</h4>-->
+    <br>
+    <div class="container">
+        <h4>[[${notification.title}]]</h4>
+        <div style="white-space: pre-wrap;" th:text="${notification.message}"></div>
+
+    </div>
+</section>
+
+
+</body>
+</html>
+

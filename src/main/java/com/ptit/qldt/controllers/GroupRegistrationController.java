@@ -5,7 +5,6 @@ import com.ptit.qldt.dtos.GroupDto;
 import com.ptit.qldt.dtos.GroupRegistrationDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.models.Group;
-import com.ptit.qldt.models.GroupRegistration;
 import com.ptit.qldt.services.CourseService;
 import com.ptit.qldt.services.GroupRegistrationService;
 import com.ptit.qldt.services.GroupService;
@@ -52,7 +51,7 @@ public class GroupRegistrationController {
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
-        return "groupRegister";
+        return "group_register";
     }
 
     @GetMapping("/group_register/{courseId}/groups")
@@ -75,7 +74,7 @@ public class GroupRegistrationController {
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
 
-        return "groupRegister";
+        return "group_register";
     }
 
     @GetMapping("/group_register/{groupId}/add")
@@ -97,7 +96,7 @@ public class GroupRegistrationController {
             if(group.getCourse().getId().equals(x.getGroup().getCourse().getId())) {
                 model.addAttribute("blockAlert", "block");
                 model.addAttribute("mess", "Môn học đã được đăng ký");
-                return "groupRegister";
+                return "group_register";
             }
         }
 
@@ -105,7 +104,7 @@ public class GroupRegistrationController {
         if(group.getAvailableSlots()<=0) {
             model.addAttribute("blockAlert", "block");
             model.addAttribute("mess", "Nhóm này đã hết chỗ");
-            return "groupRegister";
+            return "group_register";
         }
 
         // Kiểm tra xem có trừng thời khóa biểu không
@@ -113,7 +112,7 @@ public class GroupRegistrationController {
             if(group.getTime().equals(x.getGroup().getTime())) {
                 model.addAttribute("blockAlert", "block");
                 model.addAttribute("mess", "Trùng thời gian");
-                return "groupRegister";
+                return "group_register";
             }
         }
 

@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto" th:if="${session.acc == null}">
                 <li class="nav-item ${homeactive}">
-                    <a class="nav-link" href="home">Trang chủ<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/home}">Trang chủ<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ${loginactive} ">
                     <a class="nav-link" th:href="@{/login}">Đăng nhập</a>
@@ -32,7 +32,7 @@
             </ul>
             <ul class="navbar-nav mr-auto" th:if="${session.acc != null}">
                 <li class="nav-item ${homeactive}">
-                    <a class="nav-link" href="home">Trang chủ<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/home}">Trang chủ<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">
                     <a class="nav-link" th:href="@{/courses}">Quản lý môn học</a>
@@ -40,13 +40,14 @@
                 <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
                     <a class="nav-link" th:href="@{/group_register}">Đăng ký môn học</a>
                 </li>
+                <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
+                    <a class="nav-link" th:href="@{/time_table}">Xem thời khóa biểu tuần</a>
+                </li>
                 <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
                     <a class="nav-link" th:href="@{/show_grade}">Xem điểm</a>
                 </li>
-
-
-                <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
-                    <a class="nav-link" th:href="@{/time_table}">Xem thời khóa biểu tuần</a>
+                <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
+                    <a class="nav-link" th:href="@{/tuition}">Xem học phí</a>
                 </li>
 
                 <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() == 2}">
@@ -54,7 +55,7 @@
                 </li>
 
                 <li class="nav-item" >
-                    <a class="nav-link" th:text="'Hello ' + ${session.acc.getName()}"></a>
+                    <a class="nav-link" th:href="@{/information}" th:text="'Hello ' + ${session.acc.getName()}"></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
