@@ -39,10 +39,6 @@
                         <thead>
                         <tr>
                             <th>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="selectAll">
-									<label for="selectAll"></label>
-								</span>
                             </th>
                             <th>Mã môn học</th>
                             <th>Tên môn học</th>
@@ -56,10 +52,6 @@
 <!--                        <c:forEach items="${i.getLi()}" var="o">-->
                             <tr  th:each="o :${i.getLi()}">
                                 <td>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="checkbox5" name="options[]" value="1">
-									<label for="checkbox5"></label>
-								</span>
                                 </td>
                                 <td>[[${o.getCourse().id}]]</td>
                                 <td>[[${o.getCourse().getName()}]]</td>

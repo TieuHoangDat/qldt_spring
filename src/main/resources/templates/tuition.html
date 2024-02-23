@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/manager.css}" />
+    <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <h4>Xem học phí</h4>
+
+                        </div>
+
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Niên học học kỳ</th>
+                        <th>Số tín chỉ</th>
+                        <th>Học phí</th>
+                        <th>Đã thu</th>
+                        <th>Còn nợ</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="o :${listT}">
+                        <td></td>
+                        <td>[[${o.term}]]</td>
+                        <td>[[${o.total_credit}]]</td>
+                        <td>[[${o.tuition}]]</td>
+                        <td>[[${o.tuition}]]</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><h5>Tổng cộng</h5></td>
+                        <td>[[${total_credit}]]</td>
+                        <td>[[${total_tuition}]]</td>
+                        <td>[[${total_tuition}]]</td>
+                        <td>0</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+</body>
+</html>
+

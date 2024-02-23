@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Course Manager</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: auto; /* Căn giữa bảng */
+            margin-right: auto; /* Căn giữa bảng */
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            width: 33.33%; /* Chiều rộng của mỗi cột */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+
+    <div class="container">
+
+        <table>
+            <tr>
+                <th><h4>Thông tin tài khoản</h4></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>Mã</th>
+                <th>[[${session.acc.getAccount_id()}]]</th>
+            </tr>
+            <tr>
+                <th>Họ và tên</th>
+                <th>[[${session.acc.getName()}]]</th>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <th>[[${session.acc.getEmail()}]]</th>
+            </tr>
+            <tr>
+                <th>Nơi sinh</th>
+                <th>Hải Dương</th>
+            </tr>
+            <tr>
+                <th>Dân tộc</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th><a href="/forget-password">Đổi mật khẩu</a></th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+</section>
+
+
+</body>
+</html>
+
