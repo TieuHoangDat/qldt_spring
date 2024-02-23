@@ -45,10 +45,6 @@
                     <thead>
                     <tr>
                         <th>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="selectAll">
-									<label for="selectAll"></label>
-								</span>
                         </th>
                         <th>Tên môn học</th>
                         <th>Nhóm</th>
@@ -64,10 +60,7 @@
 
                     <tr th:each="o :${groups}">
                         <td>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="checkbox5" name="options[]" value="1">
-									<label for="checkbox5"></label>
-								</span>
+
                         </td>
                         <td>[[${o.getCourse().name}]]</td>
                         <td>[[${o.groupName}]]</td>
