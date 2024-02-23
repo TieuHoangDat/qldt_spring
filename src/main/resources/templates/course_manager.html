@@ -26,14 +26,14 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-xs-4">
-                        <a href="managercontrol">
+                        <a th:href="@{/courses}" style="color: white">
                             <h2>Manage <b>Course</b></h2>
                         </a>
 
                     </div>
 
                     <div class="col-xs-4">
-                        <form class="form-inline" method="post" action="searchcourse">
+                        <form class="form-inline" th:action="@{/search}" method="get">
                             <input name="searchCourse" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                         </form>
@@ -42,7 +42,6 @@
                     <div class="col-xs-4">
 
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Course</span></a>
-                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
                     </div>
                 </div>
             </div>
@@ -50,25 +49,22 @@
                 <thead>
                 <tr>
                     <th>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="selectAll">
-									<label for="selectAll"></label>
-								</span>
+
                     </th>
                     <th>Tên môn học</th>
                     <th>Mã môn học</th>
                     <th>Số tín chỉ</th>
                     <th>
                         Học kì
+<!--                        <p>[[${semester}]]</p>-->
+                        <form method="post" action="filterBySemester" th:action="@{/filter}">
                         <!--<a href="searchcourse?">Lọc</a>-->
-                        <form method="post" action="filterBySemester">
-                            <select id ="mySelect" name="category" class="form-select" aria-label="Default select example">
+                            <select id ="mySelect" name="semester" class="form-select" aria-label="Default select example" th:value="${semester}">
+                                <option selected>[[${semester}]]</option>
                                 <option >Tất cả</option>
-<!--                                <c:forEach begin="1" end="10" var="o">-->
-                                    <option value=${o}><a href="searchcourse?semester=${o}">${o}</a></option>
-<!--                                </c:forEach>-->
+                                <a><option name="semester" th:each="i : ${#numbers.sequence(1, 6)}" th:value="${i}"><a href="searchcourse?semester=${o}">[[${i}]]</a></option></a>
                             </select>
-
+                            <button class="btn btn-light" type="submit"><i class="fa fa-filter" aria-hidden="true"></i></button>
                         </form>
                     </th>
                     <th>Actions</th>
@@ -78,18 +74,15 @@
 
                     <tr th:each="o :${courses}">
                         <td>
-								<span class="custom-checkbox">
-									<input type="checkbox" id="checkbox5" name="options[]" value="1">
-									<label for="checkbox5"></label>
-								</span>
+
                         </td>
-                        <td>[[${o.name}]]</td>
+                        <td><a th:href="@{/groupByCourse/{courseId}(courseId=${o.id})}">[[${o.name}]]</a></td>
                         <td>[[${o.id}]]</td>
                         <td>[[${o.num_credit}]]</td>
                         <td>[[${o.term}]]</td>
                         <td>
-                            <a href="editcourse?idEdit=${o.id}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="deletecourse?idDelete=${o.id}" class="delete" ><i  class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a th:href="@{/courses/{courseId}/edit(courseId = ${o.id})}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a th:href="@{/courses/{courseId}/delete(courseId = ${o.id})}" class="delete" ><i  class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                         </td>
                     </tr>
 
@@ -114,7 +107,7 @@
 <div id="addEmployeeModal" class="modal fade in" style="display: none;padding-right: 15px;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="add" method = "post">
+            <form role="form" method="post" th:action="@{/courses/new}" th:object="${course}">
                 <div class="modal-header">
                     <h4 class="modal-title">Thêm môn học</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -122,20 +115,21 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Tên môn học</label>
-                        <input type="text" class="form-control" name ="name" required >
+                        <input th:field="*{name}" type="text" class="form-control" name ="name" required >
                     </div>
                     <div class="form-group">
                         <label>Mã hôn học</label>
-                        <input type="text" class="form-control"  name ="id" required>
+                        <input th:field="*{id}" type="text" class="form-control"  name ="id" required>
                     </div>
                     <div class="form-group">
                         <label>Số tín chỉ</label>
-                        <input type="text" class="form-control" name="numberOfCredit" required>
+                        <input value="" th:field="*{num_credit}" type="text" class="form-control" name="numberOfCredit" required>
                     </div>
                     <div class="form-group">
                         <label>Học kì</label>
-                        <input type="text" class="form-control" name  ="semester" required>
+                        <input th:field="*{term}" value="" type="text" class="form-control" name  ="semester" required>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -169,7 +163,7 @@
 <div id="editEmployeeModal" class="modal fade in" style="display: none;padding-right: 15px;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="editcourse?idEdit=${courseEdit.id}&edit=1" method = "post">
+            <form role="form" method="post" th:action="@{/courses/{courseId}/edit(courseId=${course.id})}" th:object="${course}">
                 <div class="modal-header">
                     <h4 class="modal-title">Chỉnh sửa</h4>
                     <button  type="button" class="close" data-dismiss="modal" aria-hidden="true"><a href="managercontrol?blockEdit=none">&times;</a></button>

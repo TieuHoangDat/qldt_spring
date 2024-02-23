@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+    <div id="editEmployeeModal" style="display: block;padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" method="post" th:action="@{/courses/{courseId}/edit(courseId=${course.id})}" th:object="${course}">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Chỉnh sửa</h4>
+                        <button  type="button" class="close" data-dismiss="modal" aria-hidden="true"><a th:href="@{/courses}">&times;</a></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Tên môn học</label>
+                            <input th:field="*{name}" type="text" class="form-control" required >
+                        </div>
+                        <div class="form-group">
+                            <label>Mã hôn học</label>
+                            <input th:field="*{id}" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Số tín chỉ</label>
+                            <input th:field="*{num_credit}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Học kì</label>
+                            <input th:field="*{term}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+<!--                            <label>GPA</label>-->
+                            <input th:field="*{notcal}" style="display: none" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/courses}" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                        <input type="submit" class="btn btn-success" value="Add">
+                        <!--<a href="editcourse?idEdit=${courseEdit.id}&edit=1" type="submit" class="btn btn-info" value="Save">Submit</a>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+</body>
+</html>
+

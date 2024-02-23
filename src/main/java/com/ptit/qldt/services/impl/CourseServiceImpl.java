@@ -33,5 +33,48 @@ public class CourseServiceImpl implements CourseService {
         return courses.stream().map(course -> mapToCourseDto(course)).collect(Collectors.toList());
     }
 
+    @Override
+    public Course saveCourse(Course course) {
+        return courseRepository.save(course);
 
+    }
+
+    @Override
+    public CourseDto findCourseById(String courseId) {
+        Course course = courseRepository.findById(courseId).get();
+        return mapToCourseDto(course);
+    }
+
+    @Override
+    public void updateCourse(CourseDto courseDto) {
+        Course course = mapToCourse(courseDto);
+        courseRepository.save(course);
+    }
+
+    @Override
+    public void delete(String courseId) {
+        courseRepository.deleteById(courseId);
+    }
+
+    @Override
+    public List<CourseDto> findCourseByName(String name) {
+        List<Course> courses = courseRepository.findByName(name);
+        return courses.stream().map(course -> mapToCourseDto(course)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CourseDto> findCourseBySemester(int semester) {
+        List<Course> courses = courseRepository.findBySemester(semester);
+        return courses.stream().map(course -> mapToCourseDto(course)).collect(Collectors.toList());
+    }
+
+    private Course mapToCourse(CourseDto course) {
+        Course courseDto = Course.builder()
+                .id(course.getId())
+                .name(course.getName())
+                .num_credit(course.getNum_credit())
+                .term(course.getTerm())
+                .notcal(course.getNotcal()).build();
+        return courseDto;
+    }
 }

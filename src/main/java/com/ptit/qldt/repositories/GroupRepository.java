@@ -1,5 +1,6 @@
 package com.ptit.qldt.repositories;
 
+import com.ptit.qldt.models.Account;
 import com.ptit.qldt.models.Course;
 import com.ptit.qldt.models.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,7 @@ public interface GroupRepository  extends JpaRepository<Group, String> {
     @Query("SELECT g FROM Group g WHERE g.teacher.account_id = :accountId")
     List<Group> getGroupByTeacherID(int accountId);
 
+
     List<Group> findByCourseId(String courseId);
 
     @Modifying
@@ -30,4 +32,7 @@ public interface GroupRepository  extends JpaRepository<Group, String> {
 
     @Query("SELECT g FROM Group g WHERE g.groupId = :groupId")
     Group findGroupById(@Param("groupId") String groupId);
+
+    @Query("SELECT a FROM Account a")
+    List<Account> findAllAccount();
 }

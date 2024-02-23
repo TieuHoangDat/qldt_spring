@@ -37,6 +37,9 @@
                 <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">
                     <a class="nav-link" th:href="@{/courses}">Quản lý môn học</a>
                 </li>
+<!--                <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">-->
+<!--                    <a class="nav-link" th:href="@{/groupss}">Quản lý nhóm học</a>-->
+<!--                </li>-->
                 <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
                     <a class="nav-link" th:href="@{/group_register}">Đăng ký môn học</a>
                 </li>

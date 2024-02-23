@@ -2,6 +2,9 @@ package com.ptit.qldt.mappers;
 
 import com.ptit.qldt.dtos.CourseDto;
 import com.ptit.qldt.models.Course;
+import com.ptit.qldt.services.CourseService;
+
+import java.util.List;
 
 public class CourseMapper {
     public static CourseDto mapToCourseDto(Course course) {
@@ -14,4 +17,5 @@ public class CourseMapper {
                 .build();
         return courseDto;
     }
+
 }

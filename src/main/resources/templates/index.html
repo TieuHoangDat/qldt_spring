@@ -11,14 +11,14 @@
   <title>Course Manager</title>
 </head>
 <body>
-
 <!--Body-->
 <section layout:fragment="body">
-
-
+<!--    <input th:value="${file}" type="text" name="" id="">-->
+<!--    <input th:value="${list}">-->
+    <div th:each="o :${list}">
+        <div>[[${o.getAccount().getAccount_id()}]]</div>
+    </div>
 </section>
-
-
 </body>
 </html>
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Course Manager</title>
+</head>
+<body>
+<!--Body-->
+<section layout:fragment="body">
+        <div class="modal-dialog" style="max-width: 90%;max-height: 500px;
+        overflow-y: auto;">
+            <div class="modal-content">
+                <form th:action="@{/groupByCourse/{courseId}(courseId=${courseId})}" method="get">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Grade</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th style="width:25%; padding: 0px !important ">Mã Sinh Viên</th>
+                                <th style="width:35%; padding: 0px !important">Tên</th>
+                                <th style="width:25%; padding: 0px !important">Mã Nhóm </th>
+                                <th style="width:15%; padding: 0px !important">Grade(Hệ 10)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="o:${list}">
+                                    <td><input th:value="${o.getAccount().getAccount_id()}" style="padding: 0px !important" value="" th:name="${o.id}" type="text" class="form-control" required readonly></td>
+                                    <td><input th:value="${o.getAccount().getName()}" style="padding: 0px !important" th:name="${o.id}" type="text" class="form-control" required readonly></td>
+                                    <td><input th:value="${groupId}" style="padding: 0px !important" th:name="${o.id}" type="text" class="form-control" required readonly></td>
+                                    <td><input th:value="${o.grade_10}" style="padding: 0px !important" th:name="${o.id}" type="text" class="form-control" required readonly></td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/groupByCourse/{courseId}(courseId = ${courseId})}" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                        <input type="submit" class="btn btn-success" value="Xác nhận">
+                    </div>
+                </form>
+            </div>
+        </div>
+</section>
+</body>
+</html>
+

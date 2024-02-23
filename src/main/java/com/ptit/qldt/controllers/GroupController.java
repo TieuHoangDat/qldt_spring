@@ -1,7 +1,12 @@
 package com.ptit.qldt.controllers;
 
 import com.ptit.qldt.dtos.AccountDto;
+import com.ptit.qldt.dtos.CourseDto;
+import com.ptit.qldt.dtos.CourseRegistrationDto;
+import com.ptit.qldt.dtos.GroupDto;
 import com.ptit.qldt.models.Account;
+import com.ptit.qldt.models.Course;
+import com.ptit.qldt.models.CourseRegistration;
 import com.ptit.qldt.models.Group;
 import com.ptit.qldt.services.GroupService;
 import com.ptit.qldt.services.UserService;
@@ -10,14 +15,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 @Controller
@@ -31,6 +39,23 @@ public class GroupController {
     }
 
 
+    @GetMapping("/groupByCourse/{courseId}")
+    public String showGroupByCourse(@PathVariable String courseId , Model model){
+        List<GroupDto> groups = groupService.getGroupsForCourse(courseId);
+        List<AccountDto> accounts = groupService.findAllAccount();
+        for(AccountDto accountDto : accounts){
+            System.out.println(accountDto.getFullName());
+        }
+        Group group = new Group();
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("groups", groups);
+        model.addAttribute("group",group);
+        return "group_manager";
+    }
+
+
+
     @GetMapping("/group_teacher")
     public String showTimeTable(HttpSession session, Model model) {
         Account user = (Account) session.getAttribute("acc");
@@ -38,6 +63,281 @@ public class GroupController {
         model.addAttribute("groups", listg);
         return "group_teacher";
     }
+
+    @GetMapping("/groupss")
+    public String showGroup(Model model){
+        List<GroupDto> groups = groupService.findAllGroup();
+        List<AccountDto> accounts = groupService.findAllAccount();
+        Group group = new Group();
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("groups", groups);
+        model.addAttribute("group",group);
+        return "group_manager";
+    }
+
+    @GetMapping("/groupByCourse/{courseId}/new")
+    public String createGroup(@PathVariable(value = "courseId") String courseId ,Model model){
+        List<AccountDto> accounts = groupService.findAllAccount();
+        Group group = new Group();
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("group",group);
+        return "redirect:/groupByCourse/{courseId}";
+    }
+
+    @PostMapping("/groupByCourse/{courseId}/new")
+    public String saveGroup(@ModelAttribute("group") Group group ,
+                            Model model,
+                            @PathVariable(value = "courseId") String courseId ,
+                            @RequestParam(value = "name_group") String name_group,
+                            @RequestParam(value = "course_id") String course_id ,
+                            @RequestParam(value = "day") String day ,
+                            @RequestParam(value = "time") String time ,
+                            @RequestParam(value = "teacher_id") int teacher_id,
+                            @RequestParam(value = "room") String room,
+                            @RequestParam(value = "quantity_student") int quantity_student){
+        Account account = new Account();
+        account.setAccount_id(teacher_id);
+        Course course = new Course();
+        course.setId(course_id);
+        String thoigian = "Thứ "+ day +",kíp "+time;
+        String groupId = course_id+"_"+String.format("N%02d", Integer.parseInt(name_group.substring(5)));
+
+        group.setGroupName(name_group);
+        group.setGroupId(groupId);
+        group.setCourse(course);
+        group.setTime(thoigian);
+        group.setTeacher(account);
+        group.setRoom(room);
+        group.setMaxStudents(quantity_student);
+        group.setAvailableSlots(quantity_student);
+
+        model.addAttribute("course_id",course_id);
+
+        groupService.saveGroup(group);
+        return "redirect:/groupByCourse/{courseId}";
+    }
+
+    @GetMapping("/groupByCourse/{courseId}/{groupId}/edit")
+    public String editGroup(@PathVariable("groupId") String groupId ,
+                            Model model,
+                            @PathVariable("courseId") String courseId){
+        GroupDto groupDto = groupService.findGroupById(groupId);
+        List<AccountDto> accounts = groupService.findAllAccount();
+//        groupDto.setRegisted(true);
+//        groupDto.setMaxStudents(20);
+//        groupDto.setAvailableSlots(20);
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("groupId",groupId);
+        model.addAttribute("group",groupDto);
+        model.addAttribute("courseId",courseId);
+        return "edit_group";
+    }
+
+    @PostMapping("/groupByCourse/{courseId}/{groupId}/edit")
+    public String updateGroup(@PathVariable(value = "groupId") String groupId ,
+                              @PathVariable(value = "courseId") String courseId,
+                              @ModelAttribute("group") GroupDto group,
+                              @RequestParam(value = "name_group") String name_group,
+                              @RequestParam(value = "course_id") String course_id ,
+                              @RequestParam(value = "day") String day ,
+                              @RequestParam(value = "time") String time ,
+                              @RequestParam(value = "teacher_id") int teacher_id,
+                              @RequestParam(value = "room") String room,
+                              @RequestParam(value = "quantity_student") int quantity_student){
+        group.setGroupId(groupId);
+        Account account = new Account();
+        account.setAccount_id(teacher_id);
+//        account.setName(teacher_name);
+        Course course = new Course();
+        course.setId(course_id);
+
+        group.setCourse(course);
+        group.setTeacher(account);
+        group.setGroupName(name_group);
+        group.setRegisted(true);
+        group.setMaxStudents(quantity_student);
+        group.setAvailableSlots(quantity_student);
+        String thoigian = "Thứ "+day +",kíp " +time;
+        group.setTime(thoigian);
+        group.setRoom(room);
+        groupService.updateGroup(group);
+        return "redirect:/groupByCourse/{courseId}";
+    }
+
+    @GetMapping("/groupByCourse/{courseId}/{groupId}/delete")
+    public String deleteGroup(@PathVariable(value = "groupId") String groupId , @ModelAttribute("courseId") String courseId ){
+        groupService.delete(groupId);
+        return "redirect:/groupByCourse/{courseId}";
+    }
+
+    @GetMapping("/groupByCourse/{courseId}/{groupId}/addGrade")
+    public String addGrade(@PathVariable(value = "courseId") String courseId ,
+                           Model model,
+                           @PathVariable(value = "groupId") String groupId){
+        List<GroupDto> groups = groupService.getGroupsForCourse(courseId);
+
+        model.addAttribute("groups", groups);
+        model.addAttribute("blockFilePath","block");
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("groupId",groupId);
+        return "group_manager";
+    }
+
+    @PostMapping("/groupByCourse/{courseId}/{groupId}/addGrade")
+    public String test(Model model,
+                       @RequestParam(value = "file") String filePath,
+                       @PathVariable(value = "courseId") String courseId,
+                       @PathVariable(value = "groupId") String groupId){
+        model.addAttribute("file",filePath);
+        List<CourseRegistrationDto> list =  new ArrayList<>();
+        try {
+//            String idCourse = "BAS1105";
+            // Đường dẫn đến tệp Excelx
+            System.out.println(filePath);
+            String excelFilePath = filePath;
+            if (excelFilePath.contains("\"")) {
+                excelFilePath = excelFilePath.replace("\"", "");
+            }
+            System.out.println(excelFilePath);
+
+            // Tạo một FileInputStream để đọc tệp Excel
+            FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+
+            // Tạo một đối tượng Workbook từ FileInputStream
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+
+            // Chọn một sheet (ví dụ: sheet đầu tiên)
+            Sheet sheet = workbook.getSheetAt(0);
+
+            // Lặp qua từng hàng của sheet
+            int dem = -1;
+            for (Row row : sheet) {
+                Integer accountId = null;
+                Float diem = null;
+                dem++;
+                if(dem < 10) continue;
+                int cot = 0;
+                for (Cell cell : row) {
+                    cot++;
+                    if(cot == 2 && cell != null){
+                        if (cell.getCellType() == CellType.NUMERIC) {
+                            double numericValue = cell.getNumericCellValue();
+                            // Kiểm tra xem giá trị có phải là số nguyên hay không
+                            if (numericValue == Math.floor(numericValue) && !Double.isInfinite(numericValue)) {
+                                // Giá trị là số nguyên, sử dụng String.format để in ra
+                                accountId = Integer.parseInt(String.format(Locale.US, "%.0f ", numericValue).trim());
+//                         System.out.print(String.format(Locale.US, "%.0f ", numericValue));
+                            }
+                        }
+                    }
+                    if(cot == 11){
+                        try{
+                            diem = Float.parseFloat(cell.toString());
+//                            System.out.println(diem);
+                        }catch(Exception e){
+
+                        }
+//                        diem = Float.parseFloat(cell.toString().trim());
+                    }
+                    if(cot > 11 ){
+                        break;
+                    }
+                }
+                if(accountId != null){
+                    CourseRegistrationDto courseRegistrationDto = groupService.findCourseRegistration(courseId,accountId);
+                    courseRegistrationDto.setGrade_10(diem);
+                    groupService.updateCourseRigistation(courseRegistrationDto);
+                    list.add(courseRegistrationDto);
+                }
+            }
+
+            // Đóng FileInputStream và Workbook sau khi hoàn thành
+            inputStream.close();
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(CourseRegistrationDto x : list){
+            System.out.println(x.getAccount().getAccount_id()+" "+x.getCourse().getId() + " " + x.getGrade_10() + " " + x.getAccount().getName());
+        }
+        model.addAttribute("list",list);
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("groupId",groupId);
+        return "add_grade";
+    }
+
+    // testtttttttttttttt
+//@PostMapping("/groupByCourse/{courseId}/{groupId}/addGrade")
+//public String test(Model model, @RequestParam(value = "file") String filePath,@PathVariable(value = "courseId") String courseId){
+//    model.addAttribute("file",filePath);
+//    String list = "";
+////                groupService.readExcel("C:\\Users\\ASUS\\Desktop\\"+filePath,courseId);
+////        list += "duong";
+////        List<CourseRegistrationDto> list = new ArrayList<>();
+//    try {
+////            String idCourse = "BAS1105";
+//        // Đường dẫn đến tệp Excel
+//        String excelFilePath = "C:\\Users\\ASUS\\Desktop\\"+filePath;
+//
+//        // Tạo một FileInputStream để đọc tệp Excel
+//        FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+//
+//        // Tạo một đối tượng Workbook từ FileInputStream
+//        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+//
+//        // Chọn một sheet (ví dụ: sheet đầu tiên)
+//        Sheet sheet = workbook.getSheetAt(0);
+//
+//        // Lặp qua từng hàng của sheet
+//        int dem = -1;
+//        for (Row row : sheet) {
+//            String accountId = null;
+//            Float diem = null;
+//            dem++;
+//            if(dem <= 10) continue;
+//            int cot = 0;
+//            for (Cell cell : row) {
+//                cot++;
+//                    if(cell != null){
+//                        if(cot==2 || cot == 3 || cot == 4 || cot == 5 || cot==6 || cot == 7 || cot == 8 || cot == 9 || cot ==10 || cot==11){
+//                            list = list+" "+cell;
+//                        }
+//                    }
+////                if(cot == 2 && cell != null){
+////                    accountId = cell.toString();
+////                }
+////                if(cot == 11){
+////                    diem = Float.parseFloat(cell.toString().trim());
+////                }
+//
+////                CourseRegistrationDto courseRegistrationDto = groupService.findCourseRegistration(courseId,accountId);
+////                list.add(courseRegistrationDto);
+//                if(cot > 11 ){
+//                    break;
+//                }
+//            }
+//        }
+//
+//        // Đóng FileInputStream và Workbook sau khi hoàn thành
+//        inputStream.close();
+//        workbook.close();
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+////    for(CourseRegistrationDto x : list){
+////        System.out.println(x.getId());
+////    }
+//    model.addAttribute("list",list);
+//    return "index";
+//}
+
+//    @PostMapping("/home/create-notification")
+//    public String createNotification(@RequestParam("title") String title, @RequestParam("mes") String mes) {
+//        notificationService.save(title, mes);
+//        return "redirect:/home";
+//    }
+
 
     @GetMapping("/getliststudents/{groupId}/getlist")
     public void exportExcel(HttpServletResponse response, @PathVariable String groupId, HttpSession session) throws IOException {

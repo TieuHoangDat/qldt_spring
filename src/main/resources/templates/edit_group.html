@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Course Manager</title>
+</head>
+<body>
+
+<!--Body-->
+<section layout:fragment="body">
+  <div id="editEmployeeModal" style="display: block;padding-right: 15px;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form role="form" method="post" th:action="@{/groupByCourse/{courseId}/{groupId}/edit(groupId=${groupId},courseId = ${courseId})}" th:object="${group}">
+          <div class="modal-header">
+            <h4 class="modal-title">Sửa nhóm học</h4>
+            <a th:href="@{/groupByCourse/{courseId}(courseId = ${courseId})}"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Tên nhóm</label>
+              <input  th:value="${group.groupName}" name="name_group" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Mã môn học</label>
+              <input th:value="${group.getCourse().id}"  name="course_id" type="text" class="form-control" required readonly>
+            </div>
+            <div class="form-group">
+              <label>Thứ</label>
+              <input th:value="${group.time.substring(4,5)}"  name="day" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Kíp</label>
+              <input th:value="${group.time.substring(10)}" name="time" type="text" class="form-control" required>
+            </div>
+<!--            <div class="form-group">-->
+<!--              <label>Tên giáo viên</label>-->
+<!--              <input th:value="${group.getTeacher().name}" name="teacher_name" type="text" class="form-control" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Mã giáo viên</label>-->
+<!--              <input th:value="${group.getTeacher().account_id}" name="teacher_id" type="text" class="form-control" required>-->
+<!--            </div>-->
+            <div class="form-group">
+              <label>Giáo viên</label>
+              <select name="teacher_id">
+                <option th:value="${group.getTeacher().account_id}" selected>[[${group.getTeacher().name}]]</option>
+                <option th:each="i : ${accounts}" th:value="${i.account_id}">[[${i.fullName}]]</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Phòng học</label>
+              <input th:value="${group.room}" name="room" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Số lượng sinh viên</label>
+              <input th:value="${group.getMaxStudents()}" name="quantity_student" type="number" class="form-control" required>
+            </div>
+            <input type="hidden" name="maxStudents" th:value="${group.maxStudents}">
+            <input type="hidden" name="availableSlots" th:value="${group.maxStudents}">
+            <input type="hidden" name="registed" value="true">
+          </div>
+          <div class="modal-footer">
+            <a th:href="@{/groupByCourse/{courseId}(courseId = ${courseId})}">
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            </a>
+            <input type="submit" class="btn btn-success" value="Edit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+</body>
+</html>
+
