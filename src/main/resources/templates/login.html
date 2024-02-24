@@ -11,7 +11,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
-
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: auto; /* Căn giữa bảng */
+            margin-right: auto; /* Căn giữa bảng */
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            width: 33.33%; /* Chiều rộng của mỗi cột */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
     <title>Login</title>
 </head>
 <body>
@@ -55,7 +70,28 @@
 
 
         <div id="logreg-forms">
-
+            <table>
+                <tr>
+                    <th>Vai trò</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                </tr>
+                <tr>
+                    <th>Sinh viên:</th>
+                    <th>nva</th>
+                    <th>nva</th>
+                </tr>
+                <tr>
+                    <th>Giảng viên:</th>
+                    <th>nms</th>
+                    <th>nms</th>
+                </tr>
+                <tr>
+                    <th>Admin:</th>
+                    <th>admin</th>
+                    <th>admin</th>
+                </tr>
+            </table>
             <form method="post" role="form" th:action="@{/login/check}" th:object="${user}">
                 <div th:if="${param.fail}" class="alert alert-success">
                     Username or password is wrong!
