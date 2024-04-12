@@ -3,9 +3,6 @@ package com.ptit.qldt.services;
 import com.ptit.qldt.dtos.AccountDto;
 import com.ptit.qldt.dtos.CourseRegistrationDto;
 import com.ptit.qldt.dtos.GroupDto;
-import com.ptit.qldt.dtos.GroupRegistrationDto;
-import com.ptit.qldt.models.Account;
-import com.ptit.qldt.models.CourseRegistration;
 import com.ptit.qldt.models.Group;
 
 import java.util.List;
@@ -36,5 +33,8 @@ public interface GroupService {
 
     void updateCourseRigistation(CourseRegistrationDto courseRegistrationDto);
 
-    List<AccountDto> findAllAccount();
+    List<AccountDto> findAllTeacherAccount();
+
+    List<AccountDto> findAllStudentAccount();
+
 }

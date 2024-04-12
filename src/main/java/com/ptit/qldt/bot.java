@@ -17,7 +17,8 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
     public bot(String botToken) {
         telegramClient = new OkHttpTelegramClient(botToken);
     }
-    public void sendMesseage(String text,String userIdTelegram){
+
+    public void sendMesseage(String text, String userIdTelegram) {
         SendMessage message = SendMessage // Create a message object
                 .builder()
                 .chatId(userIdTelegram)
@@ -29,6 +30,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
             e.printStackTrace();
         }
     }
+
     @Override
     public void consume(Update update) {
         // We check if the update has a message and the message has text
@@ -39,7 +41,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
             long chat_id = update.getMessage().getChatId();
             System.out.println(chat_id);
 
-            if(message_text.equals("/start")){
+            if (message_text.equals("/start")) {
                 message_text = "Nhập mã sinh viên";
             }
 
