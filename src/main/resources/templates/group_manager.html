@@ -95,19 +95,19 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Tên nhóm</label>
-                            <input name="name_group" type="text" class="form-control" required>
+                            <input placeholder="Nhập số thứ tự nhóm" name="name_group" type="text" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Mã môn học</label>
-                            <input th:value="${courseId}"  name="course_id" type="text" class="form-control" required>
+                            <input readonly th:value="${courseId}"  name="course_id" type="text" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Thứ</label>
-                            <input name="day" type="text" class="form-control" required>
+                            <input name="day" type="number" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Kíp</label>
-                            <input name="time" type="text" class="form-control" required>
+                            <input name="time" type="number" class="form-control" required>
                         </div>
 <!--                        <div class="form-group">-->
 <!--                            <label>Tên giáo viên</label>-->
@@ -129,7 +129,7 @@
                         </div>
                         <div class="form-group">
                             <label>Số lượng sinh viên</label>
-                            <input name="quantity_student" type="text" class="form-control" required>
+                            <input name="quantity_student" type="number" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">

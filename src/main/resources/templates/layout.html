@@ -13,10 +13,91 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>QLDT</title>
 </head>
+<script type="text/javascript" language="javascript" src="http://localhost/aaksbd/books_recouse/js/jquery-3.2.1.min.js"></script>
+
+<style>
+    .google-translate {
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 15px;
+    }
+
+    /*.goog-logo-link {*/
+    /*    display: none !important;*/
+    /*}*/
+
+    .goog-te-gadget {
+        color: transparent !important;
+    }
+
+    /*#google_translate_element {*/
+    /*    display: none;*/
+    /*}*/
+
+    /*.goog-te-banner-frame.skiptranslate {*/
+    /*    display: none !important;*/
+    /*}*/
+
+    body {
+        top: 0px !important;
+    }
+
+    .english {
+        background-color: red;
+        color: white;
+    }
+    iframe{
+        display: none !important;
+    }
+
+</style>
+<script>
+    // Lấy tham chiếu đến button ":0.restore"
+    var originalButton = document.getElementById(':0.restore');
+
+    // Lắng nghe sự kiện click trên button "restoreButton"
+    document.getElementById('restoreButton').addEventListener('click', function() {
+        // Kích hoạt sự kiện click trên button ":0.restore"
+        if (originalButton) {
+            originalButton.click();
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: '', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
+    }
+
+    function triggerHtmlEvent(element, eventName) {
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(eventName, true, true);
+            element.dispatchEvent(event);
+        } else {
+            event = document.createEventObject();
+            event.eventType = eventName;
+            element.fireEvent('on' + event.eventType, event);
+        }
+    }
+
+    jQuery('.lang-select').click(function() {
+        var theLang = jQuery(this).attr('data-lang');
+        jQuery('.goog-te-combo').val(theLang);
+
+        //alert(jQuery(this).attr('href'));
+        window.location = jQuery(this).attr('data');
+        location.reload();
+
+    });
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <!--Header-->
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">PTIT</a>
+        <a class="navbar-brand" href="#" translate="no">PTIT</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -64,14 +145,44 @@
                     <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
                 </li>
 
-
             </ul>
 
         </div>
+        <button data="#googtrans(vi|en)" class="btn btn-sm btn-danger lang-en lang-select" data-lang="en">English</button> |
+        <button data="#googtrans(en|vi)" class="btn btn-sm btn-info  lang-bn lang-select" data-lang="bn">Vietnamese</button>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: '', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
+            }
+
+            function triggerHtmlEvent(element, eventName) {
+                var event;
+                if (document.createEvent) {
+                    event = document.createEvent('HTMLEvents');
+                    event.initEvent(eventName, true, true);
+                    element.dispatchEvent(event);
+                } else {
+                    event = document.createEventObject();
+                    event.eventType = eventName;
+                    element.fireEvent('on' + event.eventType, event);
+                }
+            }
+            jQuery('.lang-select').click(function() {
+                var theLang = jQuery(this).attr('data-lang');
+                jQuery('.goog-te-combo').val(theLang);
+
+                //alert(jQuery(this).attr('href'));#googtrans(vi|en)
+                window.location = jQuery(this).attr('data');
+                location.reload();
+
+            });
+        </script>
+        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     </nav>
 </div>
 <!--Body-->
-<body layout:fragment="body"></body>
+<body layout:fragment="body">
+</body>
 <!--Footer-->
 <div th:fragment="footer">
     <footer class="text-light">
@@ -127,4 +238,5 @@
         </div>
     </footer>
 </div>
+
 </html>

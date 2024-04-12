@@ -1,12 +1,10 @@
 package com.ptit.qldt.controllers;
 
 import com.ptit.qldt.dtos.AccountDto;
-import com.ptit.qldt.dtos.CourseDto;
 import com.ptit.qldt.dtos.CourseRegistrationDto;
 import com.ptit.qldt.dtos.GroupDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.models.Course;
-import com.ptit.qldt.models.CourseRegistration;
 import com.ptit.qldt.models.Group;
 import com.ptit.qldt.services.GroupService;
 import com.ptit.qldt.services.UserService;
@@ -42,7 +40,7 @@ public class GroupController {
     @GetMapping("/groupByCourse/{courseId}")
     public String showGroupByCourse(@PathVariable String courseId , Model model){
         List<GroupDto> groups = groupService.getGroupsForCourse(courseId);
-        List<AccountDto> accounts = groupService.findAllAccount();
+        List<AccountDto> accounts = groupService.findAllTeacherAccount();
         for(AccountDto accountDto : accounts){
             System.out.println(accountDto.getFullName());
         }
@@ -67,7 +65,7 @@ public class GroupController {
     @GetMapping("/groupss")
     public String showGroup(Model model){
         List<GroupDto> groups = groupService.findAllGroup();
-        List<AccountDto> accounts = groupService.findAllAccount();
+        List<AccountDto> accounts = groupService.findAllTeacherAccount();
         Group group = new Group();
         model.addAttribute("accounts",accounts);
         model.addAttribute("groups", groups);
@@ -77,7 +75,7 @@ public class GroupController {
 
     @GetMapping("/groupByCourse/{courseId}/new")
     public String createGroup(@PathVariable(value = "courseId") String courseId ,Model model){
-        List<AccountDto> accounts = groupService.findAllAccount();
+        List<AccountDto> accounts = groupService.findAllTeacherAccount();
         Group group = new Group();
         model.addAttribute("accounts",accounts);
         model.addAttribute("courseId",courseId);
@@ -101,9 +99,11 @@ public class GroupController {
         Course course = new Course();
         course.setId(course_id);
         String thoigian = "Thứ "+ day +",kíp "+time;
-        String groupId = course_id+"_"+String.format("N%02d", Integer.parseInt(name_group.substring(5)));
+        String groupId = course_id + "_" + String.format("N%02d",Integer.parseInt(name_group));
+//        String groupId = course_id+"_"+String.format("N%02d", Integer.parseInt(name_group.substring(5)));
+        String group_name = "Nhóm " + name_group;
 
-        group.setGroupName(name_group);
+        group.setGroupName(group_name);
         group.setGroupId(groupId);
         group.setCourse(course);
         group.setTime(thoigian);
@@ -123,7 +123,7 @@ public class GroupController {
                             Model model,
                             @PathVariable("courseId") String courseId){
         GroupDto groupDto = groupService.findGroupById(groupId);
-        List<AccountDto> accounts = groupService.findAllAccount();
+        List<AccountDto> accounts = groupService.findAllTeacherAccount();
 //        groupDto.setRegisted(true);
 //        groupDto.setMaxStudents(20);
 //        groupDto.setAvailableSlots(20);
@@ -192,7 +192,6 @@ public class GroupController {
         model.addAttribute("file",filePath);
         List<CourseRegistrationDto> list =  new ArrayList<>();
         try {
-//            String idCourse = "BAS1105";
             // Đường dẫn đến tệp Excelx
             System.out.println(filePath);
             String excelFilePath = filePath;
@@ -269,7 +268,7 @@ public class GroupController {
 
     // testtttttttttttttt
 //@PostMapping("/groupByCourse/{courseId}/{groupId}/addGrade")
-//public String test(Model model, @RequestParam(value = "file") String filePath,@PathVariable(value = "courseId") String courseId){
+//public String com.ptit.qldt.test(Model model, @RequestParam(value = "file") String filePath,@PathVariable(value = "courseId") String courseId){
 //    model.addAttribute("file",filePath);
 //    String list = "";
 ////                groupService.readExcel("C:\\Users\\ASUS\\Desktop\\"+filePath,courseId);

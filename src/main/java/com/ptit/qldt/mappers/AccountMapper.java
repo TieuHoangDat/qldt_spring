@@ -21,6 +21,8 @@ public class AccountMapper {
                 .lastName(lastName.toString())
                 .username(account.getUsername())
                 .email(account.getEmail())
+                .user_id_telegram(account.getUser_id_telegram())
+                .role(account.getRole())
                 .build();
         return accountDto;
     }

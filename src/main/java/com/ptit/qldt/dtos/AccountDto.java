@@ -10,5 +10,6 @@ public class AccountDto {
     private String fullName, firstName, lastName;
     private String username;
     private String email;
+    private String user_id_telegram;
     private Integer role;
 }

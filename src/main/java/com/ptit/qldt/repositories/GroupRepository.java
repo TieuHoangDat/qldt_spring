@@ -35,4 +35,6 @@ public interface GroupRepository  extends JpaRepository<Group, String> {
 
     @Query("SELECT a FROM Account a")
     List<Account> findAllAccount();
+    @Query("SELECT gr FROM Group gr WHERE gr.time LIKE %:dayOfWeek%")
+    List<Group> findByDayOfWeek(@Param("dayOfWeek") String dayOf);
 }

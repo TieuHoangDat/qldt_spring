@@ -1,5 +1,6 @@
 package com.ptit.qldt.services.impl;
 
+import com.ptit.qldt.dtos.GroupDto;
 import com.ptit.qldt.dtos.GroupRegistrationDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.models.Group;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.ptit.qldt.mappers.GroupMapper.mapToGroupDto;
 import static com.ptit.qldt.mappers.GroupRegistrationMapper.mapToGroupRegistrationDto;
 
 @Service
@@ -55,4 +57,12 @@ public class GroupRegistrationServiceImpl implements GroupRegistrationService {
         groupRegistrationRepository.deleteByAccountIdAndGroupId(accountId, groupId);
         groupRepository.increaseAvailableSlots(groupId);
     }
+
+    @Override
+    public List<GroupRegistrationDto> findGroupByDayOfWeekAndTime(String dayOfWeek, String time) {
+        List<GroupRegistration> groupRegistrations = groupRegistrationRepository.findGroupRegistrationByDayOfWeekandTime(dayOfWeek,time);
+        return groupRegistrations.stream().map(groupRegistration -> mapToGroupRegistrationDto(groupRegistration)).collect(Collectors.toList());
+    }
+
+
 }

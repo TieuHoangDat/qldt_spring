@@ -23,5 +23,6 @@ public class Account {
     private String password;
     private String email;
     private Integer role;
+    private String user_id_telegram;
     private String otp;
 }

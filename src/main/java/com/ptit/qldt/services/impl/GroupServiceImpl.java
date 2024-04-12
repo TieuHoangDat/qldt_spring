@@ -126,8 +126,14 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<AccountDto> findAllAccount() {
+    public List<AccountDto> findAllTeacherAccount() {
         List<Account> accounts = accountRepository.findAllTeacher();
+        return accounts.stream().map(account -> mapToAccountDto(account)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AccountDto> findAllStudentAccount() {
+        List<Account> accounts = accountRepository.findAllStudent();
         return accounts.stream().map(account -> mapToAccountDto(account)).collect(Collectors.toList());
     }
 

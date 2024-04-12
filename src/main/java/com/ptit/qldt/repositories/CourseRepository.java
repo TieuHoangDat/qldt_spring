@@ -11,8 +11,8 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 
     @Query("SELECT cr.course FROM CourseRegistration cr WHERE cr.account.account_id = :accountId AND cr.term = 'Kỳ 1 năm học 2023-2024'")
     List<Course> findCourseRegister(@Param("accountId") int accountId);
-    @Query("SELECT c FROM Course c WHERE c.id LIKE CONCAT( '%',:name,'%') ")
-    List<Course> findByName(@Param("name") String name);
+    @Query("SELECT c FROM Course c WHERE c.id LIKE CONCAT( '%',:name,'%') or c.name like CONCAT( '%',:name,'%') ")
+    List<Course> findByName(@Param("name") String name );
 
     @Query("SELECT cr FROM CourseRegistration cr WHERE cr.account.account_id = :accountId and cr.course.id = :courseId ")
     CourseRegistration findCourseRegisterByCourseIdAndAccountId(@Param("courseId") String courseId,@Param("accountId") int accountId);

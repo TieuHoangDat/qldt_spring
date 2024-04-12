@@ -4,6 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}"
 >
+<style>
+    html {
+        scroll-behavior: smooth; /* Áp dụng hiệu ứng cuộn mượt cho toàn bộ trang */
+    }
+    .scroll-container {
+        scroll-behavior: smooth;
+        overflow-y: scroll; /* Đảm bảo phần tử này có thanh cuộn khi cần */
+    }
+</style>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +29,6 @@
 <!--Body-->
 <section layout:fragment="body">
     <div class="container">
-
         <!--Danh sách các môn học mà sinh viên đăng ký-->
         <h4>ĐĂNG KÝ MÔN HỌC HỌC KỲ 1 - NĂM HỌC 2023-2024</h4>
 
