@@ -48,6 +48,8 @@ public class GroupRegistrationController {
             }
             g.setRegisted(ok);
         }
+        String name = "Chọn môn học";
+        model.addAttribute("name", name);
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
@@ -70,6 +72,10 @@ public class GroupRegistrationController {
             }
             g.setRegisted(ok);
         }
+        CourseDto course =  courseService.findCourseById(courseId);
+        String courseName = course.getName();
+
+        model.addAttribute("name", courseName);
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);

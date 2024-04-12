@@ -2,19 +2,27 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"
+      layout:decorate="~{layout1}"
 >
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/manager.css}" />
-    <title>Course Manager</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>crud dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!----css3---->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!--google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
 
@@ -27,7 +35,7 @@
 <!--        <c:forEach items="${listT}" var="i">-->
 
             <div class="table-responsive" th:each="i :${listT}">
-                <div class="table-wrapper">
+                <div class="table-wrapper" >
                     <div class="table-title">
                         <div class="row">
 
@@ -35,12 +43,11 @@
 
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
+                    <table style="border-bottom: 1px solid #ccc;" class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th>
-                            </th>
-                            <th>Mã môn học</th>
+
+                            <th>Mã môn</th>
                             <th>Tên môn học</th>
                             <th>Số tín chỉ</th>
                             <th>Điểm TK(10)</th>
@@ -51,8 +58,7 @@
                         <tbody>
 <!--                        <c:forEach items="${i.getLi()}" var="o">-->
                             <tr  th:each="o :${i.getLi()}">
-                                <td>
-                                </td>
+
                                 <td>[[${o.getCourse().id}]]</td>
                                 <td>[[${o.getCourse().getName()}]]</td>
                                 <td>[[${o.getCourse().getNum_credit()}]]</td>
@@ -63,19 +69,28 @@
 <!--                        </c:forEach>-->
                         </tbody>
                     </table>
-                    <div class="clearfix">
-                        <div class="col-xs-6">
-                            <h5>- Điểm trung bình học kỳ hệ 4:  [[${i.avg_4}]]</h5>
-                            <h5>- Điểm trung bình học kỳ hệ 10: [[${i.avg_10}]]</h5>
-                            <h5>- Số tín chỉ đạt học kỳ:        [[${i.total_credit}]]</h5>
-                        </div>
-                        <div class="col-xs-6">
-                            <h5>- Điểm trung bình tích lũy hệ 4:  [[${i.tl_4}]]</h5>
-                            <h5>- Điểm trung bình tích lũy hệ 10: [[${i.tl_10}]]</h5>
-                            <h5>- Số tín chỉ tích lũy:            [[${i.tl_credit}]]</h5>
-                        </div>
+                    <div style="margin-left: 10px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td colspan="2">
+                                    <p>- Điểm trung bình học kỳ hệ 4:  [[${i.avg_4}]]</p>
+                                    <p>- Điểm trung bình học kỳ hệ 10: [[${i.avg_10}]]</p>
+                                    <p>- Số tín chỉ đạt học kỳ:        [[${i.total_credit}]]</p>
+                                </td>
+                                <td colspan="2">
+                                    <p>- Điểm trung bình tích lũy hệ 4:  [[${i.tl_4}]]</p>
+                                    <p>- Điểm trung bình tích lũy hệ 10: [[${i.tl_10}]]</p>
+                                    <p>- Số tín chỉ tích lũy:            [[${i.tl_credit}]]</p>
+                                </td>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                        </table>
+
 
                     </div>
+
                 </div>
             </div>
 <!--        </c:forEach>-->

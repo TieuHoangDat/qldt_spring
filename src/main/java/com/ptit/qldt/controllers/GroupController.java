@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +62,23 @@ public class GroupController {
     public String showTimeTable(HttpSession session, Model model) {
         Account user = (Account) session.getAttribute("acc");
         List<Group> listg = groupService.getGroupByTeacherID(user.getAccount_id());
+
+        long sonhom = listg.size();
+
+        // Ngày bắt đầu kỳ
+        LocalDate start = LocalDate.of(2024, 2, 5);
+        // Ngày hiện tại
+        LocalDate now = LocalDate.now();
+        // Ngày kết thúc
+        LocalDate end = LocalDate.of(2024, 5, 26);
+        // Số ngày từ fromDate đến toDate
+        long sotuandaday = ChronoUnit.WEEKS.between(start, now);
+        long sotuanchuaday = ChronoUnit.WEEKS.between(now, end);
+        long daday = sotuandaday*sonhom*2;
+        long trongtuan = sonhom*2;
+        long chuaday = sotuanchuaday*sonhom*2;
+        long[] data = {daday, trongtuan, chuaday};
+        model.addAttribute("chartData", data);
         model.addAttribute("groups", listg);
         return "group_teacher";
     }

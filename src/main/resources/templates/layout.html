@@ -4,127 +4,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">-->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-    <title>QLDT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        /*.translated-ltr{*/
+        /*    margin-top: -40px;*/
+        /*}*/
+        /*.translated-ltr{*/
+        /*    margin-top: -40px;*/
+        /*}*/
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        .goog-logo-link {
+            display: none !important;
+        }
+    </style>
 </head>
-<!--Header-->
-<div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">PTIT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div class="google_translate_element"></div>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto" th:if="${session.acc == null}">
-                <li class="nav-item ${homeactive}">
-                    <a class="nav-link" th:href="@{/home}">Trang chủ<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ${loginactive} ">
-                    <a class="nav-link" th:href="@{/login}">Đăng nhập</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mr-auto" th:if="${session.acc != null}">
-                <li class="nav-item ${homeactive}">
-                    <a class="nav-link" th:href="@{/home}">Trang chủ<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">
-                    <a class="nav-link" th:href="@{/courses}">Quản lý môn học</a>
-                </li>
-<!--                <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">-->
-<!--                    <a class="nav-link" th:href="@{/groupss}">Quản lý nhóm học</a>-->
-<!--                </li>-->
-                <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
-                    <a class="nav-link" th:href="@{/group_register}">Đăng ký môn học</a>
-                </li>
-                <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
-                    <a class="nav-link" th:href="@{/time_table}">Xem thời khóa biểu tuần</a>
-                </li>
-                <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
-                    <a class="nav-link" th:href="@{/show_grade}">Xem điểm</a>
-                </li>
-                <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
-                    <a class="nav-link" th:href="@{/tuition}">Xem học phí</a>
-                </li>
-
-                <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() == 2}">
-                    <a class="nav-link" th:href="@{/group_teacher}">Quản lý nhóm học</a>
-                </li>
-
-                <li class="nav-item" >
-                    <a class="nav-link" th:href="@{/information}" th:text="'Hello ' + ${session.acc.getName()}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
-                </li>
-
-
-            </ul>
-
-        </div>
-    </nav>
-</div>
-<!--Body-->
 <body layout:fragment="body"></body>
-<!--Footer-->
-<div th:fragment="footer">
-    <footer class="text-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-lg-4 col-xl-3">
-                    <h5>About</h5>
-                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-                    <p class="mb-0">
-                        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-                    </p>
-                </div>
 
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-                    <h5>Informations</h5>
-                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-                    <ul class="list-unstyled">
-                        <li><a href="">Link 1</a></li>
-                        <li><a href="">Link 2</a></li>
-                        <li><a href="">Link 3</a></li>
-                        <li><a href="">Link 4</a></li>
-                    </ul>
-                </div>
 
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto">
-                    <h5>Others links</h5>
-                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-                    <ul class="list-unstyled">
-                        <li><a href="">Link 1</a></li>
-                        <li><a href="">Link 2</a></li>
-                        <li><a href="">Link 3</a></li>
-                        <li><a href="">Link 4</a></li>
-                    </ul>
-                </div>
+<script th:src="@{/js/translate.js}"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: '',
+                includedLanguages: 'vi,en,es,fr',
+                // layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                // autoDisplay: false
+            },
+            'google_translate_element'
+        );
+    }
 
-                <div class="col-md-4 col-lg-3 col-xl-3">
-                    <h5>Contact</h5>
-                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-home mr-2"></i> My company</li>
-                        <li><i class="fa fa-envelope mr-2"></i> email@example.com</li>
-                        <li><i class="fa fa-phone mr-2"></i> + 33 12 14 15 16</li>
-                        <li><i class="fa fa-print mr-2"></i> + 33 12 14 15 16</li>
-                    </ul>
-                </div>
-                <div class="col-12 copyright mt-3">
-                    <p class="float-left">
-                        <a href="#">Back to top</a>
-                    </p>
-                    <p class="text-right text-muted">created with <i class="fa fa-heart"></i> by <a href="https://t-php.fr/43-theme-ecommerce-bootstrap-4.html"><i>t-php</i></a> | <span>v. 1.0</span></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
+</script>
 </html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title translate="no">PTIT</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!----css3---->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+
+
+    <!--google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        .translated-ltr{
+            margin-top: -40px;
+        }
+        .translated-ltr{
+            margin-top: -40px;
+        }
+        .goog-te-banner-frame {
+            display: none !important;
+            margin-top: -20px;
+        }
+        a.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+            display: none !important;
+        }
+        iframe{
+            display: none !important;
+        }
+        .goog-logo-link {
+            display: none !important;
+        }
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+        select.goog-te-combo {
+            margin-top: 10px;
+            padding: 5px;
+            background: #ffffff;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        select.goog-te-combo select {
+            background-color: #0563af;
+            color: white;
+            padding: 12px;
+            width: 250px;
+            border: none;
+            font-size: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            -webkit-appearance: button;
+            appearance: button;
+            outline: none;
+        }
+
+        select.goog-te-combo::before {
+            content: "\f13a";
+            font-family: FontAwesome;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20%;
+            height: 100%;
+            text-align: center;
+            font-size: 28px;
+            line-height: 45px;
+            color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+
+        select.goog-te-combo:hover::before {
+            color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        select.goog-te-combo select option {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+<div class="body-overlay"></div>
+
+<!-------sidebar--design------------>
+
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h3 style="display: flex; align-items: center;">
+            <img th:src="@{/img/logo.jpg}" class="img-fluid"/>
+            <span>QUẢN LÝ ĐÀO TẠO</span>
+        </h3>
+    </div>
+
+
+    <ul class="list-unstyled component m-0"  th:if="${session.acc == null}">
+        <li class="active">
+            <a th:href="@{/home}" class="dashboard"><i class="material-icons" translate="no">dashboard</i>Trang chủ</a>
+        </li>
+        <li class="">
+            <a th:href="@{/login}" class=""><i class="material-icons" translate="no">login</i>Đăng nhập </a>
+        </li>
+
+    </ul>
+
+
+    <ul class="list-unstyled component m-0"  th:if="${session.acc != null}">
+        <li class="active">
+            <a th:href="@{/home}" class="dashboard"><i class="material-icons" translate="no">home</i>Trang chủ</a>
+        </li>
+
+
+        <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">
+            <a class="nav-link" th:href="@{/courses}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>Quản lý môn học</a>
+        </li>
+        <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
+            <a class="nav-link" th:href="@{/group_register}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>
+                Đăng ký môn học</a>
+        </li>
+        <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
+            <a class="nav-link" th:href="@{/time_table}">
+                <i class="material-icons"><span class="material-symbols-outlined" translate="no">event_note</span></i>
+                Xem thời khóa biểu tuần
+            </a>
+        </li>
+        <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
+            <a class="nav-link" th:href="@{/show_grade}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">grade</span></i>
+                Xem điểm</a>
+        </li>
+        <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
+            <a class="nav-link" th:href="@{/tuition}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">attach_money</span></i>
+                Xem học phí
+            </a>
+        </li>
+        <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() == 2}">
+            <a class="nav-link" th:href="@{/group_teacher}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>Quản lý nhóm học</a>
+        </li>
+        <li class="">
+            <a th:href="@{/information}" class=""><i class="material-icons" translate="no">person_outline</i>[[${session.acc.getName()}]] </a>
+        </li>
+        <li class="">
+            <a th:href="@{/logout}" class=""><i class="material-icons" translate="no">logout</i>Đăng xuất </a>
+        </li>
+        <li>
+<!--            <div id="google_translate_element"></div>-->
+        </li>
+
+    </ul>
+</div>
+
+<!-------sidebar--design- close----------->
+
+<!-------page-content start----------->
+
+<div id="content">
+
+    <!------top-navbar-start----------->
+
+    <div class="top-navbar"  th:fragment="header">
+        <div class="xd-topbar">
+            <div class="row">
+                <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+                    <div class="xp-menubar">
+                        <span class="material-icons text-white" translate="no">signal_cellular_alt</span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-lg-3 order-3 order-md-2">
+
+                </div>
+
+
+                <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                    <div class="xp-profilebar text-right">
+                        <nav class="navbar p-0">
+                            <ul class="nav navbar-nav flex-row ml-auto">
+
+                                <li class="nav-item">
+                                    <div id="google_translate_element"></div>
+
+                                </li>
+                                <li class="dropdown nav-item active">
+                                    <a class="nav-link" href="#" data-toggle="dropdown">
+                                        <span class="material-icons" translate="no">notifications</span>
+                                        <span class="notification">4</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">You Have 4 New Messages</a></li>
+                                        <li><a href="#">You Have 4 New Messages</a></li>
+                                        <li><a href="#">You Have 4 New Messages</a></li>
+                                        <li><a href="#">You Have 4 New Messages</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span class="material-icons" translate="no">question_answer</span>
+                                    </a>
+                                </li>
+
+                                <li class="dropdown nav-item">
+                                    <a class="nav-link" href="#" data-toggle="dropdown">
+                                        <img th:src="@{/img/user.png}"
+                                             style="width:40px; border-radius:50%;"/>
+                                        <span class="xp-user-live"></span>
+                                    </a>
+                                    <ul class="dropdown-menu small-menu">
+                                        <li><a th:href="@{/information}">
+                                            <span class="material-icons" translate="no">person_outline</span>
+                                            Thông tin
+                                        </a></li>
+                                        <li><a href="#">
+                                            <span class="material-icons" translate="no">settings</span>
+                                            Cài đặt
+<!--                                            <div id="google_translate_element"></div>-->
+                                        </a></li>
+                                        <li><a th:href="@{/logout}">
+                                            <span class="material-icons" translate="no">logout</span>
+                                            Đăng xuất
+                                        </a></li>
+
+                                    </ul>
+                                </li>
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <!------top-navbar-end----------->
+
+
+
+
+
+    <body layout:fragment="body"></body>
+
+
+
+
+    <!----footer-design------------->
+
+<!--    <footer class="footer"  th:fragment="footer">-->
+<!--        <div class="container-fluid">-->
+<!--            <div class="footer-in">-->
+<!--                <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </footer>-->
+
+
+</div>
+
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/translate.js}"></script>
+<!--<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>-->
+
+<!--Thêm biểu đồ-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+    var data = /*[[${chartData}]]*/ [];
+    console.log(data)
+</script>
+<script th:src="@{/js/chart.js}"></script>
+
+
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: '',
+                includedLanguages: 'vi,en,es,fr',
+                // layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                // autoDisplay: false
+            },
+            'google_translate_element'
+        );
+    }
+    $(document).ready(function(){
+        $(".xp-menubar").on('click',function(){
+            $("#sidebar").toggleClass('active');
+            $("#content").toggleClass('active');
+        });
+
+        $('.xp-menubar,.body-overlay').on('click',function(){
+            $("#sidebar,.body-overlay").toggleClass('show-nav');
+        });
+
+    });
+</script>
+</body>
+</html>

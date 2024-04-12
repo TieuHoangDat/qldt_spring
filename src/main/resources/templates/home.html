@@ -1,32 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"
+      layout:decorate="~{layout1}"
 >
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/manager.css}" />
-    <title>Course Manager</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>PTIT</title>
+
+
 </head>
 <body>
 
-<!--Body-->
+
+
+
+
 <section layout:fragment="body">
+
+
     <div class="container">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-xs-6">
-                                <h2>Thông báo từ phòng giáo vụ</h2>
+                            <h2>Thông báo từ phòng giáo vụ</h2>
 
                         </div>
 
@@ -104,7 +106,7 @@
     </div>
 
     <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade in" th:style="${blockEdit == true ? 'display: block;' : 'display: none;'}">
+    <div id="editEmployeeModal" class="modal in" th:style="${blockEdit == true ? 'display: block;' : 'display: none;'}">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/home/{notificationId}/edit(notificationId=${notification.id})}" method = "post" th:object="${notification}">
@@ -131,12 +133,17 @@
         </div>
     </div>
 
-
-
-
 </section>
 
 
+
+<!-------complete html----------->
+
+
+
+
 </body>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </html>
+
 
