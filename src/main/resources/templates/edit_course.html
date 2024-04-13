@@ -15,10 +15,10 @@
     <div id="editEmployeeModal" style="display: block;padding-right: 15px;">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form role="form" method="post" th:action="@{/courses/{courseId}/edit(courseId=${course.id})}" th:object="${course}">
-                    <div class="modal-header">
+                <form  role="form" method="post" th:action="@{/courses/{courseId}/edit(courseId=${course.id})}" th:object="${course}">
+                    <div class="modal-header" style="background-color: #ad171c;color: white">
                         <h4 class="modal-title">Chỉnh sửa</h4>
-                        <button  type="button" class="close" data-dismiss="modal" aria-hidden="true"><a th:href="@{/courses}">&times;</a></button>
+                        <button   type="button" class="close" data-dismiss="modal" aria-hidden="true"><a style="color:#fffefe!important;" th:href="@{/courses}">&times;</a></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">

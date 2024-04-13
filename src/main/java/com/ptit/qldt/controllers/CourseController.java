@@ -31,6 +31,7 @@ public class CourseController {
         List<CourseDto> courses = courseService.findAllCourse();
         model.addAttribute("courses", courses);
         model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
         return "course_manager";
     }
 
@@ -46,18 +47,21 @@ public class CourseController {
         model.addAttribute("semester" , semester);
         model.addAttribute("courses", courses);
         model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
         return "course_manager";
     }
     @GetMapping("/courses/new")
     public String createCourse(Model model){
         Course course = new Course();
         model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
         return "course_manager";
     }
 
     @PostMapping("/courses/new")
-    public String saveCourse(@ModelAttribute("course") Course course){
+    public String saveCourse(@ModelAttribute("course") Course course,Model model){
         courseService.saveCourse(course);
+        model.addAttribute("courseactive","active");
         return "redirect:/courses";
     }
 
@@ -65,21 +69,24 @@ public class CourseController {
     public String editCourse(@PathVariable("courseId") String courseId,Model model){
         CourseDto course =  courseService.findCourseById(courseId);
         model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
 //        model.addAttribute("displayEdit","block");
         return "edit_course";
     }
 
     @PostMapping("/courses/{courseId}/edit")
-    public String updateCourse(@PathVariable("courseId") String courseId, @ModelAttribute("course") CourseDto course
+    public String updateCourse(Model model,@PathVariable("courseId") String courseId, @ModelAttribute("course") CourseDto course
                                ){
         course.setId(courseId);
         courseService.updateCourse(course);
+        model.addAttribute("courseactive","active");
         return "redirect:/courses";
     }
 
     @GetMapping("/courses/{courseId}/delete")
-    public String deleteCourse(@PathVariable("courseId") String courseId){
+    public String deleteCourse(@PathVariable("courseId") String courseId,Model model){
         courseService.delete(courseId);
+        model.addAttribute("courseactive","active");
         return "redirect:/courses";
     }
 
@@ -89,6 +96,7 @@ public class CourseController {
         Course course = new Course();
         model.addAttribute("courses",courses);
         model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
         return "course_manager";
     }
 

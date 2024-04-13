@@ -24,22 +24,22 @@
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
-                <div class="row">
+                <div class="row" style="height: 40px">
                     <div class="col-xs-4">
                         <a th:href="@{/courses}" style="color: white">
-                            <h2>Manage <b>Course</b></h2>
+                            <h2>Manage Course</h2>
                         </a>
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-4" style="position: absolute; right: 40%; ">
                         <form class="form-inline" th:action="@{/search}" method="get">
-                            <input name="searchCourse" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                            <input name="searchCourse" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" style="background-color: #28a745">Search</button>
                         </form>
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-4" style="position: absolute ; right: 10px; top: 8px">
 
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Course</span></a>
                     </div>
@@ -60,7 +60,9 @@
                         <form method="post" action="filterBySemester" th:action="@{/filter}">
                         <!--<a href="searchcourse?">Lọc</a>-->
                             <select id ="mySelect" name="semester" class="form-select" aria-label="Default select example" th:value="${semester}">
-                                <option selected>[[${semester}]]</option>
+<!--                                <option selected>[[${semester}]]</option>-->
+                                <option th:if="${semester == null}" selected>Tất cả</option>
+                                <option th:if="${semester != null}" th:selected="selected" th:text="${semester}"></option>
                                 <option >Tất cả</option>
                                 <a><option name="semester" th:each="i : ${#numbers.sequence(1, 6)}" th:value="${i}"><a href="searchcourse?semester=${o}">[[${i}]]</a></option></a>
                             </select>
