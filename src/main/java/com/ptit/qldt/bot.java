@@ -42,7 +42,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
             System.out.println(chat_id);
 
             if (message_text.equals("/start")) {
-                message_text = "Nhập mã sinh viên";
+                message_text = "Chào mừng bạn đến máy chủ hỗ trợ học tập cho sinh viên\nUserId của bạn là: "+chat_id+"\n Hãy vào thông tin cá nhân để cập nhật userId có thể nhận được thông báo lịch học";
             }
 
             SendMessage message = SendMessage // Create a message object
@@ -54,6 +54,7 @@ public class bot implements LongPollingSingleThreadUpdateConsumer {
                 telegramClient.execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
                 e.printStackTrace();
+                System.out.println(e);
             }
         }
     }
