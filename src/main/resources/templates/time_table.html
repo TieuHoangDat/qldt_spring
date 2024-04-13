@@ -69,8 +69,13 @@
                     <th:block th:each="col : ${#numbers.sequence(1, 7)}">
                         <td th:if="${b[row][col + 1] == null}" style="width: 110px;"></td>
                         <td th:if="${b[row][col + 1] != null}" class="bg-light-gray" style="width: 170px;">
-                            <span style="padding: 5px;" class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
-                                  th:text="${b[row][col + 1].course.name}"></span>
+<!--                            <span style="padding: 5px;" class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"-->
+<!--                                  th:text="${b[row][col + 1].course.name}"></span>-->
+                            <div style="background-color: red; border-radius: 4px; padding: 0px 5px;">
+                                <p style="color: white; font-size: 14px">
+                                    [[${b[row][col + 1].course.name}]]
+                                </p>
+                            </div>
                             <div class="font-size14" th:text="'Giảng viên: ' + ${b[row][col + 1].teacher.getName()}"></div>
                             <div class="font-size14" th:text="'Phòng: ' + ${b[row][col + 1].room}"></div>
                         </td>
