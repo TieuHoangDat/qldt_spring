@@ -122,37 +122,37 @@
 
 
     <ul class="list-unstyled component m-0"  th:if="${session.acc != null}">
-        <li class="active">
+        <li th:class="${homeactive}">
             <a th:href="@{/home}" class="dashboard"><i class="material-icons" translate="no">home</i>Trang chủ</a>
         </li>
 
 
-        <li class="nav-item ${managercourseactive}"  th:if="${session.acc.getRole() == 1}">
+        <li class="nav-item ${managercourseactive}" th:class="${courseactive}"  th:if="${session.acc.getRole() == 1}">
             <a class="nav-link" th:href="@{/courses}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>Quản lý môn học</a>
         </li>
-        <li class="nav-item ${registercourseactive}" th:if="${session.acc.getRole() == 3}">
-            <a class="nav-link" th:href="@{/group_register}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>
+        <li class="nav-item " th:class="${registercourseactive}" th:if="${session.acc.getRole() == 3}">
+            <a class="nav-link"  th:href="@{/group_register}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>
                 Đăng ký môn học</a>
         </li>
-        <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() != 1}">
+        <li class="nav-item" th:class="${tkbactive}" th:if="${session.acc.getRole() != 1}">
             <a class="nav-link" th:href="@{/time_table}">
                 <i class="material-icons"><span class="material-symbols-outlined" translate="no">event_note</span></i>
                 Xem thời khóa biểu tuần
             </a>
         </li>
-        <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
+        <li class="nav-item " th:class="${gradeactive}" th:if="${session.acc.getRole() == 3}">
             <a class="nav-link" th:href="@{/show_grade}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">grade</span></i>
                 Xem điểm</a>
         </li>
-        <li class="nav-item ${gradeactive}" th:if="${session.acc.getRole() == 3}">
+        <li class="nav-item ${gradeactive}" th:class="${tuitionactive}" th:if="${session.acc.getRole() == 3}">
             <a class="nav-link" th:href="@{/tuition}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">attach_money</span></i>
                 Xem học phí
             </a>
         </li>
-        <li class="nav-item ${tkbactive}" th:if="${session.acc.getRole() == 2}">
+        <li class="nav-item ${tkbactive}" th:class="${groupteacheractive}" th:if="${session.acc.getRole() == 2}">
             <a class="nav-link" th:href="@{/group_teacher}"><i class="material-icons"><span class="material-symbols-outlined" translate="no">edit</span></i>Quản lý nhóm học</a>
         </li>
-        <li class="">
+        <li class="" th:class="${infoactive}">
             <a th:href="@{/information}" class=""><i class="material-icons" translate="no">person_outline</i>[[${session.acc.getName()}]] </a>
         </li>
         <li class="">
@@ -194,7 +194,6 @@
 
                                 <li class="nav-item">
                                     <div id="google_translate_element"></div>
-
                                 </li>
                                 <li class="dropdown nav-item active">
                                     <a class="nav-link" href="#" data-toggle="dropdown">
@@ -258,7 +257,9 @@
 
 
 
-    <body layout:fragment="body"></body>
+    <body layout:fragment="body">
+
+    </body>
 
 
 
@@ -297,7 +298,6 @@
 <script th:src="@{/js/chart.js}"></script>
 
 
-
 <script type="text/javascript">
     function googleTranslateElementInit() {
         new google.translate.TranslateElement(
@@ -320,6 +320,21 @@
             $("#sidebar,.body-overlay").toggleClass('show-nav');
         });
 
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectElement = document.getElementsByClassName("google-te-combo");
+        var selectOption2Button = document.getElementById("selectOption2Button");
+
+        selectOption2Button.addEventListener("click", function() {
+            // Lấy tùy chọn thứ hai và đặt nó làm tùy chọn được chọn
+            selectElement.value = "en";
+
+            // Gửi sự kiện change thủ công để kích hoạt các xử lý liên quan đến việc thay đổi tùy chọn
+            var event = new Event("change");
+            selectElement.dispatchEvent(event);
+        });
     });
 </script>
 </body>

@@ -14,14 +14,14 @@
 
 <!--Body-->
 <section layout:fragment="body">
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
+    <div class="container" style="padding: 0px;width: 100%">
+        <div class="table-responsive" style="padding: 0px;" >
+            <div class="table-wrapper" style="padding: 0px">
+                <div class="table-title" style="background-color: #ad171c;margin-bottom: 20px">
                     <div class="row">
                         <div class="col-xs-4">
                             <a th:href="@{/groupss}" style="color: white">
-                                <h2>Manage <b>Group</b></h2>
+                                <h2>Manage Group</h2>
                             </a>
 
                         </div>
@@ -37,10 +37,8 @@
                 </div>
                 <table class="table table-striped table-hover">
                     <thead>
-                    <tr>
-                        <th>
-                        </th>
-                        <th>Tên môn học</th>
+                    <tr style="padding-top: 10px!important;margin-top: 10px">
+                        <th style="width: 200px">Tên môn học</th>
                         <th>Nhóm</th>
                         <th>Thời gian</th>
                         <th>Tên giảng viên</th>
@@ -53,18 +51,16 @@
                     <tbody>
 
                     <tr th:each="o :${groups}">
-                        <td>
-
-                        </td>
-                        <td>[[${o.getCourse().name}]]</td>
-                        <td>[[${o.groupName}]]</td>
+                        <td style="width: 30px">[[${o.getCourse().name}]]</td>
+                        <td >[[${o.groupName}]]</td>
                         <td>[[${o.time}]]</td>
                         <td>[[${o.getTeacher().getName()}]]</td>
                         <td>[[${o.room}]]</td>
                         <td>[[${o.availableSlots}]]</td>
                         <td>
-                            <a th:href="@{/groupByCourse/{courseId}/{groupId}/edit(groupId=${o.groupId},courseId=${courseId})}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a th:href="@{/groupByCourse/{courseId}/{groupId}/delete(groupId=${o.groupId},courseId=${courseId})}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a th:href="@{/groupByCourse/{courseId}/{groupId}/edit(groupId=${o.groupId},courseId=${courseId})}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a th:href="@{/groupByCourse/{courseId}/{groupId}/delete(groupId=${o.groupId},courseId=${courseId})}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+<!--                            <a th:href="@{/groupByCourse/{courseId}/{groupId}/edit(groupId=${o.groupId},courseId=${courseId})}"> <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
                         </td>
                         <td>
                             <a class="btn btn-primary" th:href="@{/groupByCourse/{courseId}/{groupId}/addGrade(courseId=${courseId} , groupId = ${o.groupId})}" role="button" style="color: white">Thêm điểm</a>

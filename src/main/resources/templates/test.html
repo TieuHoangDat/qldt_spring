@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="slideshow-container">
+    <div class="mySlides fade">
+        <img src="https://portal.ptit.edu.vn/wp-content/uploads/2024/03/z5221772708690_1b3af49441c33793124ff602190b7034.jpg" style="width:100%">
+    </div>
+    <div class="mySlides fade">
+        <img src="https://portal.ptit.edu.vn/wp-content/uploads/2024/03/PanoTuyenSinhThacSiDot1Nam2024.jpg" style="width:100%">
+    </div>
+    <!-- Thêm các ảnh khác tương tự ở đây -->
+</div>
+
+</body>
+<style>
+    .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+    }
+
+    .mySlides {
+        display: none;
+    }
+
+    .fade {
+        animation: fade 2s linear infinite;
+    }
+
+    @keyframes fade {
+        0% { opacity: 0; }
+        20% { opacity: 1; }
+        50% { opacity: 1; }
+        70% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+</style>
+<script>
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";
+        setTimeout(showSlides, 2000); // Đổi 2000 thành thời gian chuyển đổi ảnh mong muốn (ms)
+    }
+
+</script>
+</html>

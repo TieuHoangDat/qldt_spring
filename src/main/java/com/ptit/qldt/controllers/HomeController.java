@@ -26,18 +26,21 @@ public class HomeController {
         Notification notification = new Notification();
         model.addAttribute("notification", mapToNotificationDto(notification));
         model.addAttribute("blockEdit", false);
+        model.addAttribute("homeactive","active");
         return "home";
     }
 
     @PostMapping("/home/create-notification")
-    public String createNotification(@RequestParam("title") String title, @RequestParam("mes") String mes) {
+    public String createNotification(@RequestParam("title") String title, @RequestParam("mes") String mes,Model model) {
         notificationService.save(title, mes);
+        model.addAttribute("homeactive","active");
         return "redirect:/home";
     }
 
     @GetMapping("/home/{notificationId}/delete")
-    public String deleteNotification(@PathVariable int notificationId) {
+    public String deleteNotification(@PathVariable int notificationId,Model model) {
         notificationService.deleteNotificationById(notificationId);
+        model.addAttribute("homeactive","active");
         return "redirect:/home";
     }
 
@@ -48,6 +51,7 @@ public class HomeController {
         model.addAttribute("blockEdit", true);
         NotificationDto notificationDto = notificationService.findById(notificationId);
         model.addAttribute("notification", notificationDto);
+        model.addAttribute("homeactive","active");
         return "home";
     }
 
@@ -55,13 +59,15 @@ public class HomeController {
     public String showNotification(Model model, @PathVariable int notificationId) {
         NotificationDto notificationDto = notificationService.findById(notificationId);
         model.addAttribute("notification", notificationDto);
+        model.addAttribute("homeactive","active");
         return "notification";
     }
 
     @PostMapping("/home/{notificationId}/edit")
-    public String updateNotification(@PathVariable int notificationId, @ModelAttribute("notification") NotificationDto notificationDto) {
+    public String updateNotification(Model model,@PathVariable int notificationId, @ModelAttribute("notification") NotificationDto notificationDto) {
         notificationDto.setId(notificationId);
         notificationService.updateNotification(notificationDto);
+        model.addAttribute("homeactive","active");
         return "redirect:/home";
     }
 }

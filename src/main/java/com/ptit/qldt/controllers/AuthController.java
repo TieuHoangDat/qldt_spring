@@ -61,7 +61,8 @@ public class AuthController {
     }
 
     @GetMapping("/information")
-    public String informationPage() {
+    public String informationPage(Model model) {
+        model.addAttribute("infoactive","active");
         return "information";
     }
 

@@ -51,6 +51,7 @@ public class GroupController {
         model.addAttribute("courseId",courseId);
         model.addAttribute("groups", groups);
         model.addAttribute("group",group);
+        model.addAttribute("courseactive","active");
         return "group_manager";
     }
 
@@ -78,6 +79,7 @@ public class GroupController {
         long[] data = {daday, trongtuan, chuaday};
         model.addAttribute("chartData", data);
         model.addAttribute("groups", listg);
+        model.addAttribute("groupteacheractive","active");
         return "group_teacher";
     }
 
@@ -85,10 +87,14 @@ public class GroupController {
     public String showGroup(Model model){
         List<GroupDto> groups = groupService.findAllGroup();
         List<AccountDto> accounts = groupService.findAllTeacherAccount();
+        for(GroupDto x : groups){
+            System.out.println(x.getGroupId());
+        }
         Group group = new Group();
         model.addAttribute("accounts",accounts);
         model.addAttribute("groups", groups);
         model.addAttribute("group",group);
+        model.addAttribute("courseactive","active");
         return "group_manager";
     }
 
@@ -99,6 +105,7 @@ public class GroupController {
         model.addAttribute("accounts",accounts);
         model.addAttribute("courseId",courseId);
         model.addAttribute("group",group);
+        model.addAttribute("courseactive","active");
         return "redirect:/groupByCourse/{courseId}";
     }
 
@@ -132,6 +139,7 @@ public class GroupController {
         group.setAvailableSlots(quantity_student);
 
         model.addAttribute("course_id",course_id);
+        model.addAttribute("courseactive","active");
 
         groupService.saveGroup(group);
         return "redirect:/groupByCourse/{courseId}";
@@ -150,6 +158,7 @@ public class GroupController {
         model.addAttribute("groupId",groupId);
         model.addAttribute("group",groupDto);
         model.addAttribute("courseId",courseId);
+        model.addAttribute("courseactive","active");
         return "edit_group";
     }
 
@@ -163,7 +172,8 @@ public class GroupController {
                               @RequestParam(value = "time") String time ,
                               @RequestParam(value = "teacher_id") int teacher_id,
                               @RequestParam(value = "room") String room,
-                              @RequestParam(value = "quantity_student") int quantity_student){
+                              @RequestParam(value = "quantity_student") int quantity_student,
+                              Model model){
         group.setGroupId(groupId);
         Account account = new Account();
         account.setAccount_id(teacher_id);
@@ -181,12 +191,14 @@ public class GroupController {
         group.setTime(thoigian);
         group.setRoom(room);
         groupService.updateGroup(group);
+        model.addAttribute("courseactive","active");
         return "redirect:/groupByCourse/{courseId}";
     }
 
     @GetMapping("/groupByCourse/{courseId}/{groupId}/delete")
-    public String deleteGroup(@PathVariable(value = "groupId") String groupId , @ModelAttribute("courseId") String courseId ){
+    public String deleteGroup(@PathVariable(value = "groupId") String groupId , @ModelAttribute("courseId") String courseId,Model model ){
         groupService.delete(groupId);
+        model.addAttribute("courseactive","active");
         return "redirect:/groupByCourse/{courseId}";
     }
 
@@ -200,6 +212,7 @@ public class GroupController {
         model.addAttribute("blockFilePath","block");
         model.addAttribute("courseId",courseId);
         model.addAttribute("groupId",groupId);
+        model.addAttribute("courseactive","active");
         return "group_manager";
     }
 
@@ -282,6 +295,7 @@ public class GroupController {
         model.addAttribute("list",list);
         model.addAttribute("courseId",courseId);
         model.addAttribute("groupId",groupId);
+        model.addAttribute("courseactive","active");
         return "add_grade";
     }
 

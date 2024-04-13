@@ -57,6 +57,7 @@ public class CourseRegistrationController {
 
 //        request.setAttribute("gradeactive", "active");
         model.addAttribute("listT", listTerm);
+        model.addAttribute("gradeactive","active");
 
         return "show_grade";
     }
@@ -88,6 +89,7 @@ public class CourseRegistrationController {
         model.addAttribute("listT", listTerm);
         model.addAttribute("total_credit", total_credit);
         model.addAttribute("total_tuition", total_tuition);
+        model.addAttribute("tuitionactive","active");
 
         return "tuition";
     }

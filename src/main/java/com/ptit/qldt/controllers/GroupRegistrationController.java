@@ -49,6 +49,7 @@ public class GroupRegistrationController {
             g.setRegisted(ok);
         }
         String name = "Chọn môn học";
+        model.addAttribute("registercourseactive","active");
         model.addAttribute("name", name);
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
@@ -75,6 +76,7 @@ public class GroupRegistrationController {
         CourseDto course =  courseService.findCourseById(courseId);
         String courseName = course.getName();
 
+        model.addAttribute("registercourseactive","active");
         model.addAttribute("name", courseName);
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
@@ -89,6 +91,8 @@ public class GroupRegistrationController {
         List<CourseDto> courses = courseService.findCourseRegister(user.getAccount_id());
         List<GroupRegistrationDto> groupRegistrations = groupRegistrationService.findgroupRegistration(user.getAccount_id());
         List<GroupDto> groups = groupService.findAllGroupInCourseRegistration(user.getAccount_id());
+
+        model.addAttribute("registercourseactive","active");
         model.addAttribute("courses", courses);
         model.addAttribute("groups", groups);
         model.addAttribute("groupRegistrations", groupRegistrations);
@@ -129,10 +133,11 @@ public class GroupRegistrationController {
     }
 
     @GetMapping("/group_register/{groupId}/delete")
-    public String deleteGroupRegistration(HttpSession session, @PathVariable String groupId) {
+    public String deleteGroupRegistration(HttpSession session, @PathVariable String groupId,Model model) {
         Account user = (Account) session.getAttribute("acc");
         groupRegistrationService.deleteGroupRegistration(user.getAccount_id(), groupId);
 
+        model.addAttribute("registercourseactive","active");
         return "redirect:/group_register";
     }
 
@@ -157,6 +162,7 @@ public class GroupRegistrationController {
             }
         }
         model.addAttribute("b", b);
+        model.addAttribute("tkbactive","active");
         return "time_table";
     }
 }

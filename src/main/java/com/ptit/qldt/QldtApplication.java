@@ -50,13 +50,15 @@ public class QldtApplication {
 			String message = String.format("Bạn có lịch học của học phần %s , lớp %s , tại phòng %s , từ lúc %s đến %s ",
 					x.getGroup().getCourse().getName(),x.getGroup().getGroupId(),x.getGroup().getRoom(),beginTime,endTime);
 			String botToken = "7094394606:AAFTvgeWc3IJ91sjLYndFYGHKYAd3Ho_wp0";
-			try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
-				botsApplication.registerBot(botToken, new bot(botToken));
-				System.out.println("MyAmazingBot successfully started!");
-				bot testBot = new bot(botToken);
-				testBot.sendMesseage(message,userIdTelegaram);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if(userIdTelegaram!=null && convertTime(timeNow)!=null && convertDayOfWeek(dayOfWeek)!=null){
+				try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
+					botsApplication.registerBot(botToken, new bot(botToken));
+					System.out.println("MyAmazingBot successfully started!");
+					bot testBot = new bot(botToken);
+					testBot.sendMesseage(message,userIdTelegaram);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			System.out.println(userIdTelegaram);
 			System.out.println(x.getGroup().getGroupId());
