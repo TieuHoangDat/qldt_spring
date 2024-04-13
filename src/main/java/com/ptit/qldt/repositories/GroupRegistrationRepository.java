@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface GroupRegistrationRepository  extends JpaRepository<GroupRegistration, Integer> {
 
-    @Query("SELECT gr FROM GroupRegistration gr WHERE gr.account.account_id = :accountId")
+    @Query("SELECT gr FROM GroupRegistration gr WHERE gr.account.account_id = :accountId AND gr.group.course.term = 6")
     List<GroupRegistration> findGroupRegistration(@Param("accountId") int accountId);
 
     @Query("SELECT gr.group FROM GroupRegistration gr WHERE gr.group.time LIKE %:dayOfWeek%")
