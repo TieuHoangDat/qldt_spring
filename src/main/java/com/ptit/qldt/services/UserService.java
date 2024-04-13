@@ -20,4 +20,5 @@ public interface UserService {
     void updateOtp(int accountId, String otp);
 
     void updatePassword(int accountId, String newPassword);
+    void updateUserIdTelegram(int accountId , String userIdTelegram);
 }

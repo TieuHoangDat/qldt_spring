@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(int accountId, String newPassword) {
         userRepository.updatePasswordByAccountId(accountId, newPassword);
     }
+
+    @Override
+    public void updateUserIdTelegram(int accountId, String userIdTelegram) {
+        userRepository.updateUserIdTelegram(accountId,userIdTelegram);
+    }
 }

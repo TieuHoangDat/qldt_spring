@@ -155,10 +155,24 @@ public class AuthController {
             return "redirect:/reset-password?fail";
         }
     }
+    @PostMapping("/updateUserIdTelegram")
+    public String update(HttpSession session,
+                         @RequestParam(value = "userIdTelegram") String userIdTelegram,
+                         @RequestParam(value = "accountId") int accountId,
+                         @RequestParam(value = "username") String username){
+//        Object acc= session.getAttribute("acc");
+        userService.updateUserIdTelegram(accountId,userIdTelegram);
+        Account acc2 = userService.findByUsername(username);
+        System.out.println(acc2.getUser_id_telegram());
+        session.removeAttribute("acc");
+        session.setAttribute("acc",acc2);
+        return "redirect:/information";
+    }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("acc");
         session.removeAttribute("allNotification");
         return "redirect:/login";
     }
+
 }

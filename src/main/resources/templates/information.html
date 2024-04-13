@@ -81,6 +81,7 @@
                 <th>Họ và tên</th>
                 <th>[[${session.acc.getName()}]]</th>
             </tr>
+
             <tr>
                 <th>Email</th>
                 <th>[[${session.acc.getEmail()}]]</th>
@@ -92,6 +93,32 @@
             <tr>
                 <th>Dân tộc</th>
                 <th></th>
+            </tr>
+            <tr>
+                <th>Thêm userIdTelegram</th>
+                <th>
+                    <form role="form" method="post" style="" th:action="@{/updateUserIdTelegram}">
+                        <div style="display: flex">
+<!--                            <input  th:value="${session.acc.getUser_id_telegram()}" name="userIdTelegram" type="text" class="form-control" required>-->
+                            <input th:value="${session.acc.getUser_id_telegram()}"
+                                   th:if="${session.acc.getUser_id_telegram() != null}"
+                                   name="userIdTelegram"
+                                   type="text"
+                                   class="form-control"
+                                   required>
+
+                            <input th:if="${session.acc.getUser_id_telegram() == null}"
+                                   placeholder="Hãy cập nhật userIdTelegram"
+                                   name="userIdTelegram"
+                                   type="text"
+                                   class="form-control"
+                                   required>
+                            <input type="submit" class="btn btn-danger" value="Thêm">
+                        </div>
+                        <input style="display: none"  th:value="${session.acc.getAccount_id()}" name="accountId" type="text" class="form-control" required>
+                        <input style="display: none"  th:value="${session.acc.getUsername()}" name="username" type="text" class="form-control" required>
+                    </form>
+                </th>
             </tr>
             <tr>
                 <th><a href="/forget-password">Đổi mật khẩu</a></th>
