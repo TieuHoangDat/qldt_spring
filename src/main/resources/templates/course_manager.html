@@ -214,6 +214,18 @@
         </div>
     </div>
 </div>
+    <script th:inline="javascript">
+        var x = /*[[${notaction}]]*/ "";
+        console.log(x)
+    </script>
+    <script>
+        // var x = /*[[${notaction}]]*/ "";
+        // console.log(x);
+        // var x = null;
+        if(x==="true"){
+            alert("Khong thuc hien duoc")
+        }
+    </script>
 
 </section>
 

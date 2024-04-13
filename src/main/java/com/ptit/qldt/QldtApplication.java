@@ -24,7 +24,14 @@ public class QldtApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(QldtApplication.class, args);
-
+		String botToken = "7094394606:AAFTvgeWc3IJ91sjLYndFYGHKYAd3Ho_wp0";
+			try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
+				botsApplication.registerBot(botToken, new bot(botToken));
+				System.out.println("MyAmazingBot successfully started!");
+				bot testBot = new bot(botToken);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 	@Autowired
 	private GroupRegistrationService groupRegistrationService;
@@ -43,7 +50,6 @@ public class QldtApplication {
 //		List<GroupRegistrationDto> allGroupInDayOfWeek = groupRegistrationService.findGroupByDayOfWeekAndTime("Thứ 5","Kíp 2");
 		List<GroupRegistrationDto> allGroupInDayOfWeek = groupRegistrationService.findGroupByDayOfWeekAndTime(convertDayOfWeek(dayOfWeek),convertTime(timeNow));
 		for(GroupRegistrationDto x : allGroupInDayOfWeek){
-
 			String userIdTelegaram = x.getAccount().getUser_id_telegram();
 			String beginTime = (LocalDateTime.now().getHour()+1)+":00";
 			String endTime = (LocalDateTime.now().getHour()+3)+":00";

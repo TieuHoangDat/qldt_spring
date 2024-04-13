@@ -34,6 +34,7 @@ public class CourseController {
         model.addAttribute("course",course);
         model.addAttribute("term", a);
         model.addAttribute("courseactive","active");
+//        model.addAttribute("notaction","true");
         return "course_manager";
     }
 
@@ -102,7 +103,13 @@ public class CourseController {
 
     @GetMapping("/courses/{courseId}/delete")
     public String deleteCourse(@PathVariable("courseId") String courseId,Model model){
-        courseService.delete(courseId);
+        try {
+            courseService.delete(courseId);
+        }catch (Exception ex){
+            System.out.println("không xóa được");
+            model.addAttribute("notaction","true");
+        }
+        model.addAttribute("notaction","true");
         model.addAttribute("courseactive","active");
         return "redirect:/courses";
     }
