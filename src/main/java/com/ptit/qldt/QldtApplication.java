@@ -29,6 +29,11 @@ public class QldtApplication {
 				botsApplication.registerBot(botToken, new bot(botToken));
 				System.out.println("MyAmazingBot successfully started!");
 				bot testBot = new bot(botToken);
+//				Thread.dumpStack();
+				try {
+					Thread.currentThread().join();
+				}catch (Exception ex){
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
