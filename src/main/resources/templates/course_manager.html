@@ -27,21 +27,21 @@
                 <div class="row" style="height: 40px">
                     <div class="col-xs-4">
                         <a th:href="@{/courses}" style="color: white">
-                            <h2>Manage Course</h2>
+                            <h2>Quản lí môn học</h2>
                         </a>
 
                     </div>
 
                     <div class="col-xs-4" style="position: absolute; right: 40%; ">
                         <form class="form-inline" th:action="@{/search}" method="get">
-                            <input name="searchCourse" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
-                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" style="background-color: #28a745">Search</button>
+                            <input name="searchCourse" class="form-control mr-sm-2" type="text" placeholder="Nhập mã hoặc tên môn" aria-label="Search" >
+                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" style="background-color: #28a745">Tìm kiếm</button>
                         </form>
                     </div>
 
                     <div class="col-xs-4" style="position: absolute ; right: 10px; top: 8px">
 
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Course</span></a>
+                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm môn học mới</span></a>
                     </div>
                 </div>
             </div>

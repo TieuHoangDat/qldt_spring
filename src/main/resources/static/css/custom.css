@@ -6,6 +6,13 @@ body,html{
     margin:0px;
     padding:0px;
 }
+.back{
+    background-image: url('https://lh3.googleusercontent.com/p/AF1QipM6VB5XUK_Tx45iKZIets6n-4nM-3CdGDT2OQQe=s1360-w1360-h1020');
+    background-size: auto;
+    background-size: cover; /* Đảm bảo hình nền ảnh sẽ đầy đủ màn hình */
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
 
 
 /*==========================================================

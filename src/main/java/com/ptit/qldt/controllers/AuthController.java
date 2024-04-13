@@ -1,8 +1,10 @@
 package com.ptit.qldt.controllers;
 
+import com.ptit.qldt.dtos.NotificationDto;
 import com.ptit.qldt.dtos.RegistrationDto;
 import com.ptit.qldt.models.Account;
 import com.ptit.qldt.services.EmailService;
+import com.ptit.qldt.services.NotificationService;
 import com.ptit.qldt.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +13,19 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Random;
 
 @Controller
 public class AuthController {
     private UserService userService;
     private EmailService emailService;
+    private NotificationService notificationService;
 
-    public AuthController(UserService userService, EmailService emailService) {
+    public AuthController(UserService userService, EmailService emailService,NotificationService notificationService) {
         this.userService = userService;
         this.emailService = emailService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/register")
@@ -70,11 +75,16 @@ public class AuthController {
     public String login(HttpSession session, @ModelAttribute("user")RegistrationDto acc) {
         String username = acc.getUsername();
         String password = acc.getPassword();
+        List<NotificationDto> allNotification = notificationService.findAllNotification();
+        for(NotificationDto x : allNotification){
+            System.out.println(x.getTitle());
+        }
 
         Account user = userService.findFirstByUsername(username);
 
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("acc", user);
+            session.setAttribute("allNotification",allNotification);
             return "redirect:/home";
         } else {
 
@@ -149,6 +159,7 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("acc");
+        session.removeAttribute("allNotification");
         return "redirect:/login";
     }
 }

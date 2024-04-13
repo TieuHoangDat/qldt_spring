@@ -187,24 +187,28 @@
                 </div>
 
 
-                <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3" th:if="${session.acc != null}">
                     <div class="xp-profilebar text-right">
                         <nav class="navbar p-0">
-                            <ul class="nav navbar-nav flex-row ml-auto">
+                            <ul class="nav navbar-nav flex-row ml-auto" style="padding: 0px!important;">
 
                                 <li class="nav-item">
                                     <div id="google_translate_element"></div>
                                 </li>
-                                <li class="dropdown nav-item active">
+                                <li class="dropdown nav-item" th:if="${session.acc != null}">
                                     <a class="nav-link" href="#" data-toggle="dropdown">
                                         <span class="material-icons" translate="no">notifications</span>
                                         <span class="notification">4</span>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">You Have 4 New Messages</a></li>
-                                        <li><a href="#">You Have 4 New Messages</a></li>
-                                        <li><a href="#">You Have 4 New Messages</a></li>
-                                        <li><a href="#">You Have 4 New Messages</a></li>
+                                    <ul class="dropdown-menu" style="padding: 0px">
+                                        <li style="padding: 5px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:each="o,iterStat : ${session.allNotification}" th:if="${iterStat.index lt 4}">
+<!--                                            <p>[[${o.title}]]</p>-->
+                                            <a th:href="@{/home/{notificationId}/detail(notificationId=${o.id})}" th:text="${#strings.length(o.title) gt 50 ? #strings.substring(o.title, 0, 50) + '...' : o.title}"></a>
+                                        </li>
+<!--                                        <li><a href="#">You Have 4 New Messages</a></li>-->
+<!--                                        <li><a href="#">You Have 4 New Messages</a></li>-->
+<!--                                        <li><a href="#">You Have 4 New Messages</a></li>-->
+<!--                                        <li><a href="#">You Have 4 New Messages</a></li>-->
                                     </ul>
                                 </li>
 
