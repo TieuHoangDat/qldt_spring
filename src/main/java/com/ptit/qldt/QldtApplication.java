@@ -43,6 +43,7 @@ public class QldtApplication {
 //		List<GroupRegistrationDto> allGroupInDayOfWeek = groupRegistrationService.findGroupByDayOfWeekAndTime("Thứ 5","Kíp 2");
 		List<GroupRegistrationDto> allGroupInDayOfWeek = groupRegistrationService.findGroupByDayOfWeekAndTime(convertDayOfWeek(dayOfWeek),convertTime(timeNow));
 		for(GroupRegistrationDto x : allGroupInDayOfWeek){
+
 			String userIdTelegaram = x.getAccount().getUser_id_telegram();
 			String beginTime = (LocalDateTime.now().getHour()+1)+":00";
 			String endTime = (LocalDateTime.now().getHour()+3)+":00";

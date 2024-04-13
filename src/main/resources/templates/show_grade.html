@@ -29,8 +29,8 @@
 <!--Body-->
 <section layout:fragment="body">
     <div class="container">
-        <a onclick="a()" href="exportGrade" >
-            <input class="btn btn-success" value="Xuất Excel"  style="width: 110px;">
+        <a onclick="a()" href="exportGrade" style="margin: 20px">
+            <input class="btn btn-success" value="Xuất Excel"  style="width: 110px; margin-top: 10px">
         </a>
 <!--        <c:forEach items="${listT}" var="i">-->
 
@@ -64,7 +64,7 @@
                                 <td>[[${o.getCourse().getNum_credit()}]]</td>
                                 <td>[[${o.grade_10}]]</td>
                                 <td>[[${o.grade_4}]]</td>
-                                <td>[[${o.grade_a}]]</td>
+                                <td translate="no">[[${o.grade_a}]]</td>
                             </tr>
 <!--                        </c:forEach>-->
                         </tbody>

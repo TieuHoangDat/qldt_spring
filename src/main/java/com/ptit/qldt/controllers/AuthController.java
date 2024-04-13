@@ -125,7 +125,6 @@ public class AuthController {
             userService.updateOtp(user.getAccount_id(), otp);
             emailService.sendSimpleMessage(user.getEmail(), "Reset password", otp);
 
-            session.setAttribute("acc", user);
             return "redirect:/reset-password";
         } else {
             return "redirect:/forget-password?fail";
