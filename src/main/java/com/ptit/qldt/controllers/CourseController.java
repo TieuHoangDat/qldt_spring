@@ -28,9 +28,11 @@ public class CourseController {
     @GetMapping("/courses")
     public String listCourses(Model model) {
         Course course = new Course();
+        String a = "Tất cả";
         List<CourseDto> courses = courseService.findAllCourse();
         model.addAttribute("courses", courses);
         model.addAttribute("course",course);
+        model.addAttribute("term", a);
         model.addAttribute("courseactive","active");
         return "course_manager";
     }
@@ -45,6 +47,21 @@ public class CourseController {
             courses = courseService.findCourseBySemester(Integer.parseInt(semester));
         }
         model.addAttribute("semester" , semester);
+        model.addAttribute("courses", courses);
+        model.addAttribute("course",course);
+        model.addAttribute("courseactive","active");
+        return "course_manager";
+    }
+
+    @GetMapping("/courses/term-{term}")
+    public String filterCourse(@PathVariable("term") String term,Model model){
+        Course course = new Course();
+        List<CourseDto> courses = new ArrayList<>();
+        if(term.equals("Tất cả")){
+            courses = courseService.findAllCourse();
+        }else {
+            courses = courseService.findCourseBySemester(Integer.parseInt(term));
+        }
         model.addAttribute("courses", courses);
         model.addAttribute("course",course);
         model.addAttribute("courseactive","active");

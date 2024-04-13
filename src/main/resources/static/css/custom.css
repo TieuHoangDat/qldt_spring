@@ -115,7 +115,7 @@ a,a:hover,a:focus{
     left:0;
     bottom:0;
     z-index:11;
-    width:230px;
+    width:250px;
     overflow:auto;
     transition:all 0.3s;
     background-color:#fff;
@@ -128,7 +128,7 @@ a,a:hover,a:focus{
 
 @media only screen and (min-width:992px){
     #sidebar.active{
-        left:-230px;
+        left:-250px;
         height:100%!important;
         position:absolute!important;
         overflow:visible!important;
@@ -139,7 +139,7 @@ a,a:hover,a:focus{
     }
 
     #content{
-        width:calc(100% - 230px);
+        width:calc(100% - 250px);
         position:relative;
         float:right;
         transition:all 0.3s;
@@ -777,7 +777,7 @@ footer{
         top:0;
         bottom:0;
         z-index:10;
-        width:230px;
+        width:250px;
         transform:translatex(-100%);
         transition:all 150ms linear;
         box-shadow:none!important;
