@@ -210,7 +210,7 @@
         </div>
     </div>
 
-    <div class="modal fade in" th:style="'display: ' + (${blockFilePath} ? 'block' : 'none') + '; padding-right: 15px;'">
+    <div class="modal" th:style="'display: ' + (${blockFilePath} ? 'block' : 'none') + '; padding-right: 15px;'">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form role="form" th:action="@{/groupByCourse/{courseId}/{groupId}/addGrade(courseId = ${courseId},groupId = ${groupId})}" method="post" >
