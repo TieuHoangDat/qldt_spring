@@ -29,7 +29,6 @@ public class QldtApplication {
 				botsApplication.registerBot(botToken, new bot(botToken));
 				System.out.println("MyAmazingBot successfully started!");
 				bot testBot = new bot(botToken);
-//				Thread.dumpStack();
 				try {
 					Thread.currentThread().join();
 				}catch (Exception ex){
@@ -62,14 +61,13 @@ public class QldtApplication {
 					x.getGroup().getCourse().getName(),x.getGroup().getGroupId(),x.getGroup().getRoom(),beginTime,endTime);
 			String botToken = "7094394606:AAFTvgeWc3IJ91sjLYndFYGHKYAd3Ho_wp0";
 			if(userIdTelegaram!=null && convertTime(timeNow)!=null && convertDayOfWeek(dayOfWeek)!=null){
-				try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
-					botsApplication.registerBot(botToken, new bot(botToken));
-					System.out.println("MyAmazingBot successfully started!");
-					bot testBot = new bot(botToken);
-					testBot.sendMesseage(message,userIdTelegaram);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+//				try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
+//					botsApplication.registerBot(botToken, new bot(botToken));
+//					System.out.println("MyAmazingBot successfully started!");
+//					bot testBot = new bot(botToken);
+//					testBot.sendMesseage(message,userIdTelegaram);
+//				} catch (Exception e) {
+//					e.printStackTrace();
 			}
 			System.out.println(userIdTelegaram);
 			System.out.println(x.getGroup().getGroupId());
