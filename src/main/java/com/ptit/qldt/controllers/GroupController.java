@@ -220,9 +220,26 @@ public class GroupController {
 
     @GetMapping("/groupByCourse/{courseId}/{groupId}/delete")
     public String deleteGroup(@PathVariable(value = "groupId") String groupId , @ModelAttribute("courseId") String courseId,Model model ){
-        groupService.delete(groupId);
+        try {
+            groupService.delete(groupId);
+            model.addAttribute("courseactive","active");
+            return "redirect:/groupByCourse/{courseId}";
+        }catch (Exception x){
+            model.addAttribute("notaction","block");
+        }
+        List<GroupDto> groups = groupService.getGroupsForCourse(courseId);
+        List<AccountDto> accounts = groupService.findAllTeacherAccount();
+        for(AccountDto accountDto : accounts){
+            System.out.println(accountDto.getFullName());
+        }
+        Group group = new Group();
+
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("groups", groups);
+        model.addAttribute("group",group);
         model.addAttribute("courseactive","active");
-        return "redirect:/groupByCourse/{courseId}";
+        return "group_manager";
     }
 
     @GetMapping("/groupByCourse/{courseId}/{groupId}/addGrade")
