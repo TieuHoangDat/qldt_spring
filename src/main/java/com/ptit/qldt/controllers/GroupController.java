@@ -47,6 +47,7 @@ public class GroupController {
             System.out.println(accountDto.getFullName());
         }
         Group group = new Group();
+
         model.addAttribute("accounts",accounts);
         model.addAttribute("courseId",courseId);
         model.addAttribute("groups", groups);
@@ -84,13 +85,14 @@ public class GroupController {
     }
 
     @GetMapping("/groupss")
-    public String showGroup(Model model){
+    public String showGroup(Model model , @ModelAttribute("blockDuplicate") String blockDuplicate){
         List<GroupDto> groups = groupService.findAllGroup();
         List<AccountDto> accounts = groupService.findAllTeacherAccount();
         for(GroupDto x : groups){
             System.out.println(x.getGroupId());
         }
         Group group = new Group();
+//        model.addAttribute("blockDuplicate","block");
         model.addAttribute("accounts",accounts);
         model.addAttribute("groups", groups);
         model.addAttribute("group",group);
@@ -124,7 +126,7 @@ public class GroupController {
         account.setAccount_id(teacher_id);
         Course course = new Course();
         course.setId(course_id);
-        String thoigian = "Thứ "+ day +",kíp "+time;
+        String thoigian = "Thứ "+ day +", kíp "+time;
         String groupId = course_id + "_" + String.format("N%02d",Integer.parseInt(name_group));
 //        String groupId = course_id+"_"+String.format("N%02d", Integer.parseInt(name_group.substring(5)));
         String group_name = "Nhóm " + name_group;
@@ -154,6 +156,7 @@ public class GroupController {
 //        groupDto.setRegisted(true);
 //        groupDto.setMaxStudents(20);
 //        groupDto.setAvailableSlots(20);
+//        model.addAttribute("blockDuplicate","block");
         model.addAttribute("accounts",accounts);
         model.addAttribute("groupId",groupId);
         model.addAttribute("group",groupDto);
@@ -175,8 +178,18 @@ public class GroupController {
                               @RequestParam(value = "quantity_student") int quantity_student,
                               Model model){
         group.setGroupId(groupId);
+        String thoigian = "Thứ "+day +", kíp " +time;
         Account account = new Account();
         account.setAccount_id(teacher_id);
+        List<Group> list = groupService.getGroupByTeacherID(teacher_id);
+        boolean checkTeacher = true;
+        for(Group x : list ){
+            if(x.getTime().equals(thoigian) && !x.getGroupId().equals(groupId) && teacher_id!=10){
+                checkTeacher = false;
+            }
+            System.out.println("lay"+x.getTime());
+        }
+        System.out.println(checkTeacher);
 //        account.setName(teacher_name);
         Course course = new Course();
         course.setId(course_id);
@@ -187,12 +200,17 @@ public class GroupController {
         group.setRegisted(true);
         group.setMaxStudents(quantity_student);
         group.setAvailableSlots(quantity_student);
-        String thoigian = "Thứ "+day +",kíp " +time;
         group.setTime(thoigian);
         group.setRoom(room);
-        groupService.updateGroup(group);
+
         model.addAttribute("courseactive","active");
-        return "redirect:/groupByCourse/{courseId}";
+        if(checkTeacher) {
+            groupService.updateGroup(group);
+            return "redirect:/groupByCourse/{courseId}";
+        }
+        model.addAttribute("blockDuplicate","block");
+        return "edit_group";
+//        return "redirect:/groupByCourse/{courseId}/{groupId}/edit";
     }
 
     @GetMapping("/groupByCourse/{courseId}/{groupId}/delete")
@@ -297,6 +315,7 @@ public class GroupController {
         model.addAttribute("groupId",groupId);
         model.addAttribute("courseactive","active");
         return "add_grade";
+
     }
 
     // testtttttttttttttt

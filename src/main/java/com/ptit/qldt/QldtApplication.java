@@ -21,6 +21,7 @@ import java.util.List;
 @SpringBootApplication
 @EnableScheduling
 public class QldtApplication {
+	private static bot testbot;
 
 	public static void main(String[] args) {
 		SpringApplication.run(QldtApplication.class, args);
@@ -28,7 +29,7 @@ public class QldtApplication {
 			try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
 				botsApplication.registerBot(botToken, new bot(botToken));
 				System.out.println("MyAmazingBot successfully started!");
-				bot testBot = new bot(botToken);
+				testbot = new bot(botToken);
 				try {
 					Thread.currentThread().join();
 				}catch (Exception ex){
@@ -43,7 +44,7 @@ public class QldtApplication {
 	private GroupService groupService;
 //	private List<AccountDto> listAccoutStudent;
 
-	@Scheduled(cron = "0 15 6,8,11,13,15 * * *")
+	@Scheduled(cron = "0 30 6,8,11,13,15 * * *")
 	public void timeTable(){
 		String dayOfWeek = LocalDateTime.now().getDayOfWeek().toString();
 		String timeNow = LocalDateTime.now().getHour()+":"+LocalDateTime.now().getMinute();
@@ -61,13 +62,14 @@ public class QldtApplication {
 					x.getGroup().getCourse().getName(),x.getGroup().getGroupId(),x.getGroup().getRoom(),beginTime,endTime);
 			String botToken = "7094394606:AAFTvgeWc3IJ91sjLYndFYGHKYAd3Ho_wp0";
 			if(userIdTelegaram!=null && convertTime(timeNow)!=null && convertDayOfWeek(dayOfWeek)!=null){
-//				try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
+				try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
 //					botsApplication.registerBot(botToken, new bot(botToken));
-//					System.out.println("MyAmazingBot successfully started!");
+					System.out.println("MyAmazingBot successfully started!");
 //					bot testBot = new bot(botToken);
-//					testBot.sendMesseage(message,userIdTelegaram);
-//				} catch (Exception e) {
-//					e.printStackTrace();
+					testbot.sendMesseage(message,userIdTelegaram);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			System.out.println(userIdTelegaram);
 			System.out.println(x.getGroup().getGroupId());
@@ -117,12 +119,12 @@ public class QldtApplication {
 		if(time.equals("11:30")){
 			return "Kíp 3";
 		}
-		if(time.equals("11:15")){
+		if(time.equals("15:30")){
 			return "Kíp 4";
 		}
-		if(time.equals("15:30")){
-			return "Kíp 5";
-		}
+//		if(time.equals("15:30")){
+//			return "Kíp 5";
+//		}
 		return null;
 	}
 }

@@ -40,7 +40,12 @@ public class CourseRegistrationController {
         for(String s : listTermName) {
             List<CourseRegistration> tmp = courseRegistrationService.getCRByIdAndTerm(id, s);
             TermDto t = new TermDto(s, tmp.stream().map(x -> mapToCourseRegistrationDto(x)).collect(Collectors.toList()));
-            listTerm.add(t);
+            if(!t.getTerm().equals("Kỳ 2 năm học 2023-2024")){
+                listTerm.add(t);
+            }else{
+                System.out.println("Thôi");
+            }
+
         }
         Collections.sort(listTerm);
         double tl_10 = 0, tl_4 = 0;
@@ -58,6 +63,10 @@ public class CourseRegistrationController {
 //        request.setAttribute("gradeactive", "active");
         model.addAttribute("listT", listTerm);
         model.addAttribute("gradeactive","active");
+
+        for(TermDto x : listTerm){
+            System.out.println(x.getTerm());
+        }
 
         return "show_grade";
     }

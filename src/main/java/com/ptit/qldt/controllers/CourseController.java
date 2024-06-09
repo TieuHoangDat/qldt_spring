@@ -105,13 +105,20 @@ public class CourseController {
     public String deleteCourse(@PathVariable("courseId") String courseId,Model model){
         try {
             courseService.delete(courseId);
+            return "redirect:/courses";
         }catch (Exception ex){
             System.out.println("không xóa được");
-            model.addAttribute("notaction","true");
+//            model.addAttribute("notaction","block");
         }
-        model.addAttribute("notaction","true");
+        Course course = new Course();
+        String a = "Tất cả";
+        List<CourseDto> courses = courseService.findAllCourse();
+        model.addAttribute("courses", courses);
+        model.addAttribute("course",course);
+        model.addAttribute("term", a);
+        model.addAttribute("notaction","block");
         model.addAttribute("courseactive","active");
-        return "redirect:/courses";
+        return "course_manager";
     }
 
     @GetMapping("/search")

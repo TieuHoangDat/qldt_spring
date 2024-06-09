@@ -43,6 +43,13 @@
             <img src="img/content/timetable.png" alt="">
         </div>
         <div class="table-responsive">
+            <div style="width: 100%; background-color: #7e0d0d; color: white; display: flex; justify-content: space-between; align-items: center;">
+                <button onclick="prevWeek()" style="flex: 0 0 auto;">&#8592;</button>
+                <select id="weekSelector" onchange="selectWeek()" style="flex: 1; margin: 0 10px; text-align: center; width: 100%;height: 100%;">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <button onclick="nextWeek()" style="flex: 0 0 auto;">&#8594;</button>
+            </div>
             <table class="table table-bordered text-center" style="min-height: 400px">
                 <thead>
                 <tr class="bg-light-gray" style="background-color: #ad171c; color: white">
@@ -56,39 +63,150 @@
                     <th class="text-uppercase">Chủ nhật</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="display">
                 <tr th:each="row : ${#numbers.sequence(1, 5)}">
                     <!-- Các điều kiện cho giờ -->
-                    <td class="align-middle" th:if="${row==1}">07:00</td>
-                    <td class="align-middle" th:if="${row==2}">09:00</td>
-                    <td class="align-middle" th:if="${row==3}">12:00</td>
-                    <td class="align-middle" th:if="${row==4}">14:00</td>
-                    <td class="align-middle" th:if="${row==5}">16:00</td>
-
+                    <td style="text-align: center" class="align-middle" th:if="${row==1}">  07:00-08:50</td>
+                    <td style="text-align: center" class="align-middle" th:if="${row==2}">  09:00-11:50</td>
+                    <td style="text-align: center" class="align-middle" th:if="${row==3}">  12:00-13:50</td>
+                    <td style="text-align: center" class="align-middle" th:if="${row==4}">  14:00-15:50</td>
+                    <td style="text-align: center" class="align-middle" th:if="${row==5}">  16:00-17:50</td>
                     <!-- Vòng lặp từ 1 đến 7 -->
                     <th:block th:each="col : ${#numbers.sequence(1, 7)}">
-                        <td th:if="${b[row][col + 1] == null}" style="width: 110px;"></td>
-                        <td th:if="${b[row][col + 1] != null}" class="bg-light-gray" style="width: 170px;">
+                        <td class="cell" th:if="${b[row][col + 1] == null}" style="width: 110px;"></td>
+                        <td  th:if="${b[row][col + 1] != null}" class="bg-light-gray cell" style="width: 170px;">
 <!--                            <span style="padding: 5px;" class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"-->
 <!--                                  th:text="${b[row][col + 1].course.name}"></span>-->
-                            <div style="background-color: red; border-radius: 4px; padding: 0px 5px;">
-                                <p style="color: white; font-size: 14px">
-                                    [[${b[row][col + 1].course.name}]]
-                                </p>
+                            <div class="an" style="display: block">
+                                <div style="background-color: red; border-radius: 4px; padding: 0px 5px;">
+                                    <p style="color: white; font-size: 14px">
+                                        [[${b[row][col + 1].course.name}]]
+                                    </p>
+                                </div>
+                                <div class="font-size14" th:text="'Giảng viên: ' + ${b[row][col + 1].teacher.getName()}"></div>
+                                <div class="font-size14" th:text="'Phòng: ' + ${b[row][col + 1].room}"></div>
                             </div>
-                            <div class="font-size14" th:text="'Giảng viên: ' + ${b[row][col + 1].teacher.getName()}"></div>
-                            <div class="font-size14" th:text="'Phòng: ' + ${b[row][col + 1].room}"></div>
                         </td>
                     </th:block>
                 </tr>
 
                 </tbody>
             </table>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const cells = document.querySelectorAll('.an');
+                    cells.forEach(cell => {
+                            cell.style.display = 'block';
+                    });
+
+                    populateWeekSelector();
+                    selectCurrentWeek();
+                    // selectWeek(); // Select the initial week
+
+                });
+
+
+                function populateWeekSelector() {
+                    const weekSelector = document.getElementById('weekSelector');
+                    const startDate = new Date('2024-01-01');
+                    const endDate = new Date('2024-12-31');
+                    let currentDate = new Date(startDate);
+                    let weekNumber = 1;
+
+                    while (currentDate <= endDate) {
+                        const endOfWeek = new Date(currentDate);
+                        endOfWeek.setDate(currentDate.getDate() + 6);
+
+                        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                        const weekStartFormatted = currentDate.toLocaleDateString('vi-VN', options);
+                        const weekEndFormatted = endOfWeek.toLocaleDateString('vi-VN', options);
+
+                        const option = document.createElement('option');
+                        option.value = `${currentDate.toISOString().split('T')[0]}`;
+                        option.text = `Tuần ${weekNumber}: từ ${weekStartFormatted} đến ${weekEndFormatted}`;
+
+                        // Kiểm tra nếu tuần nằm trong khoảng thời gian cho phép, áp dụng màu đậm
+                        const isWithinLimit = (currentDate >= new Date('2024-01-29') && endOfWeek <= new Date('2024-06-09'));
+                        if (isWithinLimit) {
+                            option.style.color = 'red';
+                        }
+
+                        weekSelector.appendChild(option);
+
+                        // Move to the next week
+                        currentDate.setDate(currentDate.getDate() + 7);
+                        weekNumber++;
+                    }
+                }
+                function prevWeek() {
+                    const weekSelector = document.getElementById('weekSelector');
+                    const selectedIndex = weekSelector.selectedIndex;
+                    if (selectedIndex > 0) {
+                        weekSelector.selectedIndex = selectedIndex - 1;
+                        selectWeek();
+                    }
+                }
+
+                function nextWeek() {
+                    const weekSelector = document.getElementById('weekSelector');
+                    const selectedIndex = weekSelector.selectedIndex;
+                    if (selectedIndex < weekSelector.options.length - 1) {
+                        weekSelector.selectedIndex = selectedIndex + 1;
+                        selectWeek();
+                    }
+                }
+
+                function selectCurrentWeek() {
+                    const weekSelector = document.getElementById('weekSelector');
+                    const today = new Date();
+                    const options = weekSelector.options;
+
+                    // Lặp qua tất cả các tùy chọn để tìm tuần chứa ngày hiện tại
+                    for (let i = 0; i < options.length; i++) {
+                        const optionDate = new Date(options[i].value);
+                        const endDate = new Date(optionDate);
+                        endDate.setDate(optionDate.getDate() + 6);
+
+                        // Nếu ngày hiện tại nằm trong tuần này, chọn tuần này và thoát khỏi vòng lặp
+                        if (today >= optionDate && today <= endDate) {
+                            weekSelector.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                function selectWeek() {
+                    const weekSelector = document.getElementById('weekSelector');
+                    const selectedDate = new Date(weekSelector.value);
+                    const endDate = new Date(selectedDate);
+                    endDate.setDate(selectedDate.getDate() + 6);
+
+                    updateTableCells(selectedDate, endDate);
+                }
+
+                function updateTableCells(startDate, endDate) {
+                    const startLimit = new Date('2024-01-29');
+                    const endLimit = new Date('2024-06-09');
+
+                    const isWithinLimit = (startDate >= startLimit && endDate <= endLimit);
+                    const cells = document.querySelectorAll('.an');
+
+                    cells.forEach(cell => {
+                        if (!isWithinLimit) {
+                            cell.style.display= 'none'; // Thêm chuỗi rỗng vào các <td> có class là "cell"
+                        } else {
+                            cell.style.display = 'block';
+                        }
+                    });
+                }
+            </script>
         </div>
     </div>
 
 </section>
+<script>
 
+</script>
 
 </body>
 </html>

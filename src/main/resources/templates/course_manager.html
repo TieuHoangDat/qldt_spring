@@ -214,18 +214,22 @@
         </div>
     </div>
 </div>
-    <script th:inline="javascript">
-        var x = /*[[${notaction}]]*/ "";
-        console.log(x)
-    </script>
-    <script>
-        // var x = /*[[${notaction}]]*/ "";
-        // console.log(x);
-        // var x = null;
-        if(x==="true"){
-            alert("Khong thuc hien duoc")
-        }
-    </script>
+    <div th:style="'display: ' + (${notaction} ? 'block' : 'none') + '; padding-right: 15px;'" class="modal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo lỗi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><a th:href="@{/courses}">&times;</a></button>
+                    </div>
+                    <div style="margin: 10px;">
+                        <p>Không xóa được môn học do đã có dữ liệu liên quan đến môn học đã được lưu</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/courses}" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+                    </div>
+            </div>
+        </div>
+    </div>
 
 </section>
 

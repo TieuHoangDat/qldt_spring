@@ -14,6 +14,7 @@ public interface GroupService {
     List<Group> getGroupByTeacherID(int accountId);
 
     List<GroupDto> getGroupsForCourse(String courseId);
+//    List<GroupDto> getGroupByTeacherId(int teacherId);
 
     Group getGroupById(String groupId);
 
