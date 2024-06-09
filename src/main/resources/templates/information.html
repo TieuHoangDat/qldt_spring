@@ -94,7 +94,7 @@
                 <th>Dân tộc</th>
                 <th></th>
             </tr>
-            <tr>
+            <tr  th:if="${session.acc.getRole() == 3}">
                 <th>Thêm userIdTelegram</th>
                 <th>
                     <form role="form" method="post" style="" th:action="@{/updateUserIdTelegram}">
@@ -121,7 +121,7 @@
                 </th>
             </tr>
             <tr>
-                <th><a href="/forget-password">Đổi mật khẩu</a></th>
+                <th><a href="/forget-password" style="color: blue">Đổi mật khẩu</a></th>
                 <th></th>
             </tr>
         </table>
