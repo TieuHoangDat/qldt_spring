@@ -72,10 +72,15 @@ public class GroupController {
         LocalDate end = LocalDate.of(2024, 5, 26);
         // Số ngày từ fromDate đến toDate
         long sotuandaday = ChronoUnit.WEEKS.between(start, now);
-        long sotuanchuaday = ChronoUnit.WEEKS.between(now, end);
+        long sotuanchuaday = ChronoUnit.WEEKS.between(now, end) - 1;
         long daday = sotuandaday*sonhom*2;
         long trongtuan = sonhom*2;
         long chuaday = sotuanchuaday*sonhom*2;
+        if(chuaday <= 0){
+            daday = ChronoUnit.WEEKS.between(start, end)*sonhom*2;
+            trongtuan = 0;
+            chuaday = 0;
+        }
         long[] data = {daday, trongtuan, chuaday};
         model.addAttribute("chartData", data);
         model.addAttribute("groups", listg);
